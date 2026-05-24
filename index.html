@@ -974,7 +974,11 @@ const STATE = {
   try {
     // 1. Fetch public config from serverless function
     const cfgRes = await fetch('/api/config');
-    if (!cfgRes.ok) throw new Error('Config fetch failed');
+    if (!cfgRes.ok) {
+      let errMsg = `Config API error (HTTP ${cfgRes.status})`;
+      try { const e = await cfgRes.json(); errMsg = e.error || errMsg; } catch(_) {}
+      throw new Error(errMsg);
+    }
     STATE.config = await cfgRes.json();
 
     // 2. Init Supabase client with anon key (read-only for products)
