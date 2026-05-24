@@ -15,8 +15,16 @@ module.exports = (req, res) => {
     razorpayKeyId: process.env.RAZORPAY_KEY_ID || '',
   };
 
-  if (!config.supabaseUrl || !config.supabaseAnonKey || !config.razorpayKeyId) {
-    return res.status(500).json({ error: 'Server misconfiguration: missing environment variables.' });
+  const missing = [
+    !config.supabaseUrl     && 'SUPABASE_URL',
+    !config.supabaseAnonKey && 'SUPABASE_ANON_KEY',
+    !config.razorpayKeyId   && 'RAZORPAY_KEY_ID',
+  ].filter(Boolean);
+
+  if (missing.length) {
+    return res.status(500).json({
+      error: `Missing environment variable(s): ${missing.join(', ')}. Add them in Vercel → Settings → Environment Variables, then redeploy.`,
+    });
   }
 
   res.status(200).json(config);
