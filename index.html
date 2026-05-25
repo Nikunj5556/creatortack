@@ -178,7 +178,8 @@
       top: 73px;
       background: var(--surface-2);
       overflow: hidden;
-      border-radius: 0;
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.08);
     }
 
     .carousel {
@@ -188,6 +189,7 @@
       background: var(--surface-2);
       cursor: grab;
       user-select: none;
+      border-radius: 24px;
     }
     .carousel:active { cursor: grabbing; }
 
@@ -209,6 +211,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      border-radius: 24px;
     }
 
     /* Image shimmer placeholder */
@@ -301,9 +304,12 @@
 
     .product-description {
       font-size: .95rem;
-      line-height: 1.75;
+      line-height: 1.85;
       color: var(--text-2);
       font-weight: 300;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      margin: 12px 0;
     }
 
     .divider {
@@ -315,6 +321,7 @@
       display: flex;
       align-items: baseline;
       gap: 8px;
+      flex-wrap: wrap;
     }
     .price-currency {
       font-size: 1.4rem;
@@ -333,6 +340,37 @@
       color: var(--text-3);
       font-weight: 300;
       letter-spacing: .03em;
+    }
+    
+    .price-original {
+      font-size: .95rem;
+      color: var(--text-3);
+      text-decoration: line-through;
+      text-decoration-thickness: 1.5px;
+      text-decoration-color: var(--border);
+      display: inline-block;
+      margin-left: 4px;
+    }
+    
+    .price-savings {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-pale);
+      color: var(--green);
+      font-size: .8rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(61,138,110,.2);
+      margin-left: 12px;
+    }
+    .price-savings svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.5;
     }
 
     /* ── Buy Button ──────────────────────────────────────────────── */
@@ -707,13 +745,25 @@
       .carousel-wrap {
         position: relative;
         top: 0;
-        border-radius: 0;
+        border-radius: 20px;
+        margin: 0 0 0 0;
       }
-      .carousel { aspect-ratio: 4/3; }
+      .carousel { 
+        aspect-ratio: 4/3;
+        border-radius: 20px;
+      }
+      .carousel-slide img {
+        border-radius: 20px;
+      }
 
       .product-info { padding: 28px 20px 20px; gap: 20px; }
       .product-name { font-size: 2rem; }
       .price-amount { font-size: 2.4rem; }
+      .price-row { gap: 4px; }
+      .price-label { width: 100%; }
+      .price-original { font-size: .9rem; }
+      .price-savings { font-size: .75rem; padding: 3px 8px; margin-left: 8px; }
+      .product-description { font-size: .9rem; line-height: 1.8; }
 
       #page-checkout { padding: 20px 0 60px; align-items: flex-start; }
       .checkout-card {
@@ -744,6 +794,11 @@
       .checkout-product-name { font-size: 1.2rem; }
       .checkout-header { flex-direction: column; gap: 10px; }
       .checkout-price-badge { align-self: flex-start; }
+      
+      .btn-download {
+        font-size: .95rem;
+        padding: 14px 20px;
+      }
     }
 
     @media (min-width: 721px) and (max-width: 960px) {
@@ -811,7 +866,12 @@
         <div class="price-row">
           <span class="price-currency">₹</span>
           <span id="product-price" class="price-amount display">—</span>
-          <span class="price-label">one-time purchase · instant access</span>
+          <span id="price-original" class="price-original" style="display:none;">—</span>
+          <span id="price-savings" class="price-savings" style="display:none;">
+            <svg viewBox="0 0 24 24"><polyline points="21 15 16 10 5 21"/><path d="M18 2l-2.172 7.172A2 2 0 0015.172 11.172H7M9 11l.757-2.757A2 2 0 0011.757 7H18"/></svg>
+            <span id="savings-percent">—</span>
+          </span>
+          <span class="price-label" style="width: 100%; margin-top: 4px;">one-time purchase · instant access</span>
         </div>
         <button class="btn-primary" id="buy-btn" onclick="showCheckout()">
           <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
@@ -925,6 +985,10 @@
           <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Download Your Product
         </a>
+        <button id="invoice-btn" class="btn-download" style="background: linear-gradient(135deg, var(--gold-light), var(--gold)); display: none; gap: 10px;" onclick="downloadInvoice()">
+          <svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+          Download Invoice
+        </button>
       </div>
 
     </div>
@@ -960,6 +1024,7 @@ const STATE = {
   customerName: '',
   customerEmail: '',
   razorpayOrderId: null,
+  lastOrderId: null,     // order ID from database
 };
 
 /* ══════════════════════════════════════════════════════════════
@@ -974,11 +1039,7 @@ const STATE = {
   try {
     // 1. Fetch public config from serverless function
     const cfgRes = await fetch('/api/config');
-    if (!cfgRes.ok) {
-      let errMsg = `Config API error (HTTP ${cfgRes.status})`;
-      try { const e = await cfgRes.json(); errMsg = e.error || errMsg; } catch(_) {}
-      throw new Error(errMsg);
-    }
+    if (!cfgRes.ok) throw new Error('Config fetch failed');
     STATE.config = await cfgRes.json();
 
     // 2. Init Supabase client with anon key (read-only for products)
@@ -1047,8 +1108,35 @@ function renderProduct(p) {
   document.title = (p.Product_name || 'Product') + ' — Creatorstack';
 
   document.getElementById('product-name').textContent = p.Product_name || 'Untitled Product';
-  document.getElementById('product-description').textContent = p.Product_description || '';
+  
+  // Handle description with br tag support
+  const descElement = document.getElementById('product-description');
+  if (p.Product_description) {
+    descElement.innerHTML = (p.Product_description || '')
+      .replace(/\n/g, '<br />')
+      .replace(/&lt;br&gt;/g, '<br />');
+  } else {
+    descElement.textContent = '';
+  }
+  
   document.getElementById('product-price').textContent = formatPrice(p.Product_price);
+  
+  // Handle strikethrough price and savings
+  const originalPrice = p.strikethrough_price;
+  const currentPrice = p.Product_price;
+  const priceOriginalEl = document.getElementById('price-original');
+  const priceSavingsEl = document.getElementById('price-savings');
+  
+  if (originalPrice && originalPrice > currentPrice) {
+    const savings = Math.round(((originalPrice - currentPrice) / originalPrice) * 100);
+    priceOriginalEl.textContent = '₹' + formatPrice(originalPrice);
+    priceOriginalEl.style.display = 'inline-block';
+    document.getElementById('savings-percent').textContent = `Save ${savings}%`;
+    priceSavingsEl.style.display = 'inline-flex';
+  } else {
+    priceOriginalEl.style.display = 'none';
+    priceSavingsEl.style.display = 'none';
+  }
 
   // Parse images
   STATE.images = (p.Product_image_url || '')
@@ -1315,6 +1403,8 @@ async function verifyAndRecord(razorpayResponse) {
     if (!res.ok) throw new Error(data.error || 'Verification failed');
 
     hideProcessing();
+    // Store order ID for invoice generation
+    STATE.lastOrderId = data.orderId;
     showThankyou(data.orderNumber);
   } catch (err) {
     hideProcessing();
@@ -1339,8 +1429,141 @@ function showThankyou(orderNumber) {
   } else {
     dlBtn.style.display = 'none';
   }
+  
+  // Show invoice button
+  const invoiceBtn = document.getElementById('invoice-btn');
+  if (STATE.lastOrderId) {
+    invoiceBtn.style.display = 'flex';
+  } else {
+    invoiceBtn.style.display = 'none';
+  }
 
   showPage('thankyou');
+}
+
+/* ── Invoice Download ──────────────────────────────────────────────── */
+function downloadInvoice() {
+  if (!STATE.lastOrderId) {
+    showToast('Invoice not available', true);
+    return;
+  }
+  
+  // Generate simple HTML invoice
+  const invoice = generateInvoiceHTML();
+  const blob = new Blob([invoice], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `invoice-${STATE.lastOrderId}.html`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('Invoice downloaded', false);
+}
+
+function generateInvoiceHTML() {
+  const now = new Date().toLocaleDateString('en-IN', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+  
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <title>Invoice - Creatorstack</title>
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; border-bottom: 2px solid #B8935A; padding-bottom: 20px; }
+        .logo { font-size: 28px; font-weight: 600; color: #1C1B18; letter-spacing: -1px; }
+        .invoice-number { text-align: right; }
+        .invoice-number .label { font-size: 12px; color: #999; text-transform: uppercase; }
+        .invoice-number .value { font-size: 18px; font-weight: 600; color: #1C1B18; }
+        .details { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .detail-group { }
+        .detail-group .label { font-size: 12px; color: #999; text-transform: uppercase; margin-bottom: 4px; }
+        .detail-group .value { font-size: 14px; color: #1C1B18; line-height: 1.6; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
+        table th { background: #F4F3EF; padding: 12px; text-align: left; font-weight: 600; font-size: 13px; color: #6B6760; text-transform: uppercase; border-radius: 4px 4px 0 0; }
+        table td { padding: 16px 12px; border-bottom: 1px solid #E6E4DE; }
+        table tr:last-child td { border-bottom: none; }
+        .amount-section { display: flex; justify-content: flex-end; margin-bottom: 40px; }
+        .amount-box { width: 300px; }
+        .amount-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; }
+        .amount-row.total { border-top: 2px solid #B8935A; padding-top: 12px; font-weight: 600; font-size: 18px; color: #1C1B18; }
+        .note { background: #F4F3EF; padding: 16px; border-radius: 4px; font-size: 13px; color: #6B6760; line-height: 1.6; margin-bottom: 20px; }
+        .footer { text-align: center; color: #999; font-size: 12px; border-top: 1px solid #E6E4DE; padding-top: 20px; margin-top: 40px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <div class="logo">Creatorstack</div>
+          <div class="invoice-number">
+            <div class="label">Order Number</div>
+            <div class="value">${document.getElementById('ty-order-num').textContent}</div>
+          </div>
+        </div>
+        
+        <div class="details">
+          <div class="detail-group">
+            <div class="label">Bill To</div>
+            <div class="value">
+              ${STATE.customerName}<br>
+              ${STATE.customerEmail}
+            </div>
+          </div>
+          <div class="detail-group">
+            <div class="label">Invoice Details</div>
+            <div class="value">
+              Date: ${now}<br>
+              Status: Paid
+            </div>
+          </div>
+        </div>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th style="text-align: right;">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>${STATE.product.Product_name}</td>
+              <td style="text-align: right; font-weight: 600;">₹${formatPrice(STATE.product.Product_price)}</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <div class="amount-section">
+          <div class="amount-box">
+            <div class="amount-row total">
+              <span>Total Amount Paid</span>
+              <span>₹${formatPrice(STATE.product.Product_price)}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="note">
+          <strong>Thank you for your purchase!</strong> Your digital product has been delivered. You can download it from your confirmation email or the download link provided on the website. If you need any assistance, feel free to reach out to our support team.
+        </div>
+        
+        <div class="footer">
+          <p>This is an automatically generated invoice. Creatorstack • Digital Products Store</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
 }
 
 /* ══════════════════════════════════════════════════════════════
