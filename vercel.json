@@ -1,23 +1,7 @@
 {
-  "crons": [
-    {
-      "path": "/api/send-emails",
-      "schedule": "* * * * *"
-    }
-  ],
-
   "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "/api/:path*"
-    },
-    {
-      "source": "/thankyou/:path*",
-      "destination": "/thankyou.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/thankyou/:path*", "destination": "/thankyou.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
