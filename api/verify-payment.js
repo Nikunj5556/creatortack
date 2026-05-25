@@ -88,6 +88,21 @@ module.exports = async (req, res) => {
       throw new Error(error.message);
     }
 
+    // Insert email automation request
+    const { error: emailError } = await supabase
+      .from('automation_email')
+      .insert({
+        order_id: data.id,
+        is_sent: false,
+        email_type: 'delivery',
+        number_of_resend: 0,
+      });
+
+    if (emailError) {
+      console.error('Email automation insert error:', emailError);
+      // Continue - this is not critical
+    }
+
     return res.status(200).json({
       success: true,
       orderNumber: data.Order_number,
