@@ -341,7 +341,7 @@
       font-weight: 300;
       letter-spacing: .03em;
     }
-    
+
     .price-original {
       font-size: .95rem;
       color: var(--text-3);
@@ -351,7 +351,7 @@
       display: inline-block;
       margin-left: 4px;
     }
-    
+
     .price-savings {
       display: inline-flex;
       align-items: center;
@@ -605,133 +605,6 @@
     #toast.error { background: var(--red); }
 
     /* ══════════════════════════════════════════════════════════════
-       THANK YOU PAGE
-    ══════════════════════════════════════════════════════════════ */
-    #page-thankyou {
-      min-height: calc(100dvh - 73px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 48px 24px 80px;
-    }
-
-    .thankyou-card {
-      width: 100%;
-      max-width: 480px;
-      background: var(--surface);
-      border-radius: 20px;
-      border: 1px solid var(--border-soft);
-      box-shadow: var(--shadow-md);
-      overflow: hidden;
-      text-align: center;
-    }
-
-    .thankyou-top {
-      background: linear-gradient(150deg, var(--gold-pale) 0%, #fff 70%);
-      padding: 48px 32px 32px;
-      position: relative;
-      overflow: hidden;
-    }
-    .thankyou-top::before {
-      content: '';
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, rgba(184,147,90,.12) 0%, transparent 70%);
-      top: -80px; right: -80px;
-      pointer-events: none;
-    }
-
-    .success-icon-wrap {
-      width: 72px;
-      height: 72px;
-      background: var(--green-pale);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      position: relative;
-    }
-    .success-icon-wrap::after {
-      content: '';
-      position: absolute;
-      inset: -8px;
-      border-radius: 50%;
-      border: 2px solid rgba(61,138,110,.15);
-      animation: pulse-ring 2s ease-out infinite;
-    }
-    @keyframes pulse-ring {
-      0%   { transform: scale(1); opacity: 1; }
-      100% { transform: scale(1.4); opacity: 0; }
-    }
-    .success-icon-wrap svg { width: 32px; height: 32px; stroke: var(--green); fill: none; stroke-width: 2.5; }
-
-    .thankyou-title {
-      font-family: var(--font-display);
-      font-size: 2.2rem;
-      font-weight: 400;
-      color: var(--text-1);
-      line-height: 1.15;
-      margin-bottom: 8px;
-    }
-    .thankyou-sub { font-size: .9rem; color: var(--text-2); font-weight: 300; line-height: 1.6; }
-
-    .thankyou-body { padding: 28px 32px 32px; display: flex; flex-direction: column; gap: 16px; }
-
-    .order-info-box {
-      background: var(--surface-2);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-sm);
-      padding: 16px 20px;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .order-row { display: flex; justify-content: space-between; align-items: center; }
-    .order-key { font-size: .8rem; color: var(--text-3); font-weight: 400; }
-    .order-val { font-size: .875rem; color: var(--text-1); font-weight: 500; }
-    .order-num { font-family: var(--font-mono); font-size: .82rem; }
-
-    .email-notice {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      background: var(--green-pale);
-      border: 1px solid rgba(61,138,110,.2);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      text-align: left;
-    }
-    .email-notice svg { width: 16px; height: 16px; stroke: var(--green); fill: none; stroke-width: 2; flex-shrink: 0; margin-top: 2px; }
-    .email-notice-text { font-size: .83rem; color: var(--green); line-height: 1.5; }
-    .email-notice-text strong { font-weight: 600; }
-
-    .btn-download {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      padding: 16px 28px;
-      background: linear-gradient(135deg, var(--gold-light), var(--gold));
-      color: #fff;
-      border: none;
-      border-radius: var(--radius);
-      font-family: var(--font-body);
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all .25s ease;
-      letter-spacing: .01em;
-    }
-    .btn-download:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(184,147,90,.35); filter: brightness(1.05); }
-    .btn-download:active { transform: translateY(0); }
-    .btn-download svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
-
-    /* ══════════════════════════════════════════════════════════════
        RESPONSIVE — Mobile
     ══════════════════════════════════════════════════════════════ */
     @media (max-width: 720px) {
@@ -739,22 +612,18 @@
       .brand-bar .brand-name { font-size: 1.15rem; }
       .brand-bar img.logo { height: 26px; }
 
-      .product-grid {
-        grid-template-columns: 1fr;
-      }
+      .product-grid { grid-template-columns: 1fr; }
       .carousel-wrap {
         position: relative;
         top: 0;
         border-radius: 20px;
-        margin: 0 0 0 0;
+        margin: 0;
       }
-      .carousel { 
+      .carousel {
         aspect-ratio: 4/3;
         border-radius: 20px;
       }
-      .carousel-slide img {
-        border-radius: 20px;
-      }
+      .carousel-slide img { border-radius: 20px; }
 
       .product-info { padding: 28px 20px 20px; gap: 20px; }
       .product-name { font-size: 2rem; }
@@ -777,28 +646,9 @@
       .checkout-header { padding: 20px 20px 18px; }
       .checkout-body { padding: 20px 20px; gap: 16px; }
       .checkout-footer { padding: 0 20px 24px; }
-
-      #page-thankyou { padding: 20px 0 60px; align-items: flex-start; }
-      .thankyou-card {
-        border-radius: 0;
-        border-left: none;
-        border-right: none;
-        border-top: none;
-        box-shadow: none;
-        max-width: 100%;
-      }
-      .thankyou-top { padding: 40px 20px 24px; }
-      .thankyou-title { font-size: 1.9rem; }
-      .thankyou-body { padding: 20px 20px 24px; }
-
       .checkout-product-name { font-size: 1.2rem; }
       .checkout-header { flex-direction: column; gap: 10px; }
       .checkout-price-badge { align-self: flex-start; }
-      
-      .btn-download {
-        font-size: .95rem;
-        padding: 14px 20px;
-      }
     }
 
     @media (min-width: 721px) and (max-width: 960px) {
@@ -940,60 +790,6 @@
     </div>
   </div><!-- /#page-checkout -->
 
-  <!-- ── Thank You Page ────────────────────────────────────────── -->
-  <div id="page-thankyou" class="page">
-    <div class="thankyou-card">
-
-      <div class="thankyou-top">
-        <div class="success-icon-wrap">
-          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <h2 class="thankyou-title display">Thank You!</h2>
-        <p class="thankyou-sub">
-          Your purchase is confirmed.<br />Your download is ready below.
-        </p>
-      </div>
-
-      <div class="thankyou-body">
-        <div class="order-info-box">
-          <div class="order-row">
-            <span class="order-key">Order Number</span>
-            <span class="order-val order-num" id="ty-order-num">—</span>
-          </div>
-          <div class="order-row">
-            <span class="order-key">Customer</span>
-            <span class="order-val" id="ty-name">—</span>
-          </div>
-          <div class="order-row">
-            <span class="order-key">Email</span>
-            <span class="order-val" id="ty-email" style="font-size:.8rem;">—</span>
-          </div>
-          <div class="order-row">
-            <span class="order-key">Product</span>
-            <span class="order-val" id="ty-product">—</span>
-          </div>
-        </div>
-
-        <div class="email-notice">
-          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <p class="email-notice-text">
-            <strong>Confirmation recorded.</strong> Your order details have been saved. The download link is available below.
-          </p>
-        </div>
-
-        <a id="download-btn" class="btn-download" href="#" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download Your Product
-        </a>
-        <button id="invoice-btn" class="btn-download" style="background: linear-gradient(135deg, var(--gold-light), var(--gold)); display: none; gap: 10px;" onclick="downloadInvoice()">
-          <svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
-          Download Invoice
-        </button>
-      </div>
-
-    </div>
-  </div><!-- /#page-thankyou -->
-
 </div><!-- /#app -->
 
 <!-- Processing Overlay -->
@@ -1012,11 +808,11 @@
    STATE
 ══════════════════════════════════════════════════════════════ */
 const STATE = {
-  config: null,          // { supabaseUrl, supabaseAnonKey, razorpayKeyId }
-  supabase: null,        // supabase client
-  product: null,         // product row from DB
-  productId: null,       // UUID from URL
-  images: [],            // parsed image URLs
+  config: null,
+  supabase: null,
+  product: null,
+  productId: null,
+  images: [],
   carouselIndex: 0,
   isDragging: false,
   dragStartX: 0,
@@ -1024,50 +820,34 @@ const STATE = {
   customerName: '',
   customerEmail: '',
   razorpayOrderId: null,
-  lastOrderId: null,     // order ID from database
 };
 
 /* ══════════════════════════════════════════════════════════════
    INIT
 ══════════════════════════════════════════════════════════════ */
 (async function init() {
-  // Detect if we're on the thank you page
-  const currentPath = window.location.pathname;
-  const isThankyouPage = currentPath.startsWith('/thankyou');
-
-  // Only parse product ID if NOT on thank you page
-  if (!isThankyouPage) {
-    const productId = parseProductId();
-    if (!productId) return showError('No Product URL', 'Please visit a valid product link, e.g. yourstore.com/product-id');
-    STATE.productId = productId;
-  }
+  const productId = parseProductId();
+  if (!productId) return showError('No Product URL', 'Please visit a valid product link, e.g. yourstore.com/product-id');
+  STATE.productId = productId;
 
   try {
-    // 1. Fetch public config from serverless function
     const cfgRes = await fetch('/api/config');
     if (!cfgRes.ok) throw new Error('Config fetch failed');
     STATE.config = await cfgRes.json();
 
-    // 2. Init Supabase client with anon key (read-only for products)
     STATE.supabase = supabase.createClient(STATE.config.supabaseUrl, STATE.config.supabaseAnonKey);
 
-    // 3. Load product only if NOT on thank you page
-    if (!isThankyouPage && STATE.productId) {
-      const { data, error } = await STATE.supabase
-        .from('Products')
-        .select('*')
-        .eq('id', STATE.productId)
-        .single();
+    const { data, error } = await STATE.supabase
+      .from('Products')
+      .select('*')
+      .eq('id', STATE.productId)
+      .single();
 
-      if (error || !data) return showError('Product Not Found', 'This product doesn\'t exist or is no longer available.');
+    if (error || !data) return showError('Product Not Found', "This product doesn't exist or is no longer available.");
 
-      STATE.product = data;
-      renderProduct(data);
-      showPage('product');
-    } else if (isThankyouPage) {
-      // On thank you page, just show the thank you page
-      showPage('thankyou');
-    }
+    STATE.product = data;
+    renderProduct(data);
+    showPage('product');
   } catch (err) {
     console.error(err);
     showError('Something went wrong', err.message || 'Please refresh and try again.');
@@ -1079,7 +859,6 @@ const STATE = {
 ══════════════════════════════════════════════════════════════ */
 function parseProductId() {
   const path = window.location.pathname.replace(/^\//, '').split('/')[0];
-  // Basic UUID validation
   if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(path)) return path;
   return null;
 }
@@ -1088,12 +867,11 @@ function parseProductId() {
    PAGE MANAGEMENT
 ══════════════════════════════════════════════════════════════ */
 function showPage(name) {
-  ['product','checkout','thankyou'].forEach(p => {
+  ['product','checkout'].forEach(p => {
     const el = document.getElementById('page-' + p);
     el.classList.remove('active');
     el.style.display = '';
   });
-  // Hide loading
   document.getElementById('page-loading').style.display = 'none';
   document.getElementById('page-error').style.display = 'none';
 
@@ -1117,10 +895,8 @@ function showError(title, msg) {
 ══════════════════════════════════════════════════════════════ */
 function renderProduct(p) {
   document.title = (p.Product_name || 'Product') + ' — Creatorstack';
-
   document.getElementById('product-name').textContent = p.Product_name || 'Untitled Product';
-  
-  // Handle description with br tag support
+
   const descElement = document.getElementById('product-description');
   if (p.Product_description) {
     descElement.innerHTML = (p.Product_description || '')
@@ -1129,15 +905,14 @@ function renderProduct(p) {
   } else {
     descElement.textContent = '';
   }
-  
+
   document.getElementById('product-price').textContent = formatPrice(p.Product_price);
-  
-  // Handle strikethrough price and savings
+
   const originalPrice = p.strikethrough_price;
   const currentPrice = p.Product_price;
   const priceOriginalEl = document.getElementById('price-original');
   const priceSavingsEl = document.getElementById('price-savings');
-  
+
   if (originalPrice && originalPrice > currentPrice) {
     const savings = Math.round(((originalPrice - currentPrice) / originalPrice) * 100);
     priceOriginalEl.textContent = '₹' + formatPrice(originalPrice);
@@ -1149,14 +924,12 @@ function renderProduct(p) {
     priceSavingsEl.style.display = 'none';
   }
 
-  // Parse images
   STATE.images = (p.Product_image_url || '')
     .split(',')
     .map(u => u.trim())
     .filter(Boolean);
 
   if (!STATE.images.length) STATE.images = [''];
-
   buildCarousel(STATE.images);
 }
 
@@ -1192,17 +965,12 @@ function buildCarousel(images) {
       img.src = url;
       slide.appendChild(img);
     } else {
-      // Placeholder when no image
-      slide.style.display = 'flex';
-      slide.style.alignItems = 'center';
-      slide.style.justifyContent = 'center';
-      slide.style.background = '#F0EFE9';
+      slide.style.cssText = 'display:flex;align-items:center;justify-content:center;background:#F0EFE9;';
       slide.innerHTML = '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#C8C5BE" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
     }
 
     track.appendChild(slide);
 
-    // Dot
     if (images.length > 1) {
       const dot = document.createElement('button');
       dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
@@ -1212,12 +980,10 @@ function buildCarousel(images) {
     }
   });
 
-  // Show/hide nav buttons
   const showNav = images.length > 1;
   document.getElementById('carousel-prev').style.display = showNav ? 'flex' : 'none';
   document.getElementById('carousel-next').style.display = showNav ? 'flex' : 'none';
 
-  // Event listeners
   document.getElementById('carousel-prev').onclick = () => goToSlide(STATE.carouselIndex - 1);
   document.getElementById('carousel-next').onclick = () => goToSlide(STATE.carouselIndex + 1);
 
@@ -1234,7 +1000,6 @@ function goToSlide(index, animate = true) {
   track.style.transform = `translateX(-${STATE.carouselIndex * 100}%)`;
   if (!animate) requestAnimationFrame(() => { track.style.transition = ''; });
 
-  // Update dots
   document.querySelectorAll('.carousel-dot').forEach((d, i) => {
     d.classList.toggle('active', i === STATE.carouselIndex);
   });
@@ -1243,7 +1008,6 @@ function goToSlide(index, animate = true) {
 function setupCarouselDrag() {
   const carousel = document.getElementById('carousel');
 
-  // Mouse
   carousel.addEventListener('mousedown', e => { STATE.isDragging = true; STATE.dragStartX = e.clientX; });
   window.addEventListener('mousemove', e => {
     if (!STATE.isDragging) return;
@@ -1256,7 +1020,6 @@ function setupCarouselDrag() {
     if (Math.abs(diff) > 40) goToSlide(STATE.carouselIndex + (diff > 0 ? 1 : -1));
   });
 
-  // Touch
   carousel.addEventListener('touchstart', e => { STATE.dragStartX = e.touches[0].clientX; }, { passive: true });
   carousel.addEventListener('touchend', e => {
     const diff = STATE.dragStartX - e.changedTouches[0].clientX;
@@ -1272,11 +1035,8 @@ function showCheckout() {
   document.getElementById('checkout-product-name').textContent = p.Product_name || 'Product';
   document.getElementById('checkout-price-badge').textContent = '₹' + formatPrice(p.Product_price);
   document.getElementById('pay-amount-label').textContent = '₹' + formatPrice(p.Product_price);
-
-  // Re-fill if returning
   document.getElementById('input-name').value = STATE.customerName;
   document.getElementById('input-email').value = STATE.customerEmail;
-
   showPage('checkout');
   setTimeout(() => document.getElementById('input-name').focus(), 400);
 }
@@ -1288,16 +1048,13 @@ function showProduct() {
 /* ── Validation ────────────────────────────────────────────── */
 function validateCheckout() {
   let valid = true;
-
   const name = document.getElementById('input-name').value.trim();
   const email = document.getElementById('input-email').value.trim();
-
   const nameInput = document.getElementById('input-name');
   const emailInput = document.getElementById('input-email');
   const errName = document.getElementById('err-name');
   const errEmail = document.getElementById('err-email');
 
-  // Reset
   nameInput.classList.remove('error'); errName.classList.remove('show');
   emailInput.classList.remove('error'); errEmail.classList.remove('show');
 
@@ -1319,7 +1076,6 @@ function validateCheckout() {
   return valid;
 }
 
-// Clear error styling on input
 ['input-name','input-email'].forEach(id => {
   document.getElementById(id).addEventListener('input', function() {
     this.classList.remove('error');
@@ -1338,7 +1094,6 @@ async function initiatePayment() {
   showProcessing('Creating secure payment…', 'Please wait a moment.');
 
   try {
-    // 1. Create Razorpay order on server
     const res = await fetch('/api/create-order', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -1352,10 +1107,8 @@ async function initiatePayment() {
     if (!res.ok) throw new Error(orderData.error || 'Could not create payment order.');
 
     STATE.razorpayOrderId = orderData.orderId;
-
     hideProcessing();
 
-    // 2. Open Razorpay modal
     const rzpOptions = {
       key: STATE.config.razorpayKeyId,
       amount: orderData.amount,
@@ -1375,7 +1128,7 @@ async function initiatePayment() {
         },
       },
       handler: async function(response) {
-        showProcessing('Verifying payment…', 'Almost there, do not close this tab.');
+        showProcessing('Verifying payment…', 'Almost there — do not close this tab.');
         await verifyAndRecord(response);
       },
     };
@@ -1401,11 +1154,11 @@ async function verifyAndRecord(razorpayResponse) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        razorpay_order_id:  razorpayResponse.razorpay_order_id,
+        razorpay_order_id:   razorpayResponse.razorpay_order_id,
         razorpay_payment_id: razorpayResponse.razorpay_payment_id,
         razorpay_signature:  razorpayResponse.razorpay_signature,
-        productId:    STATE.productId,
-        customerName: STATE.customerName,
+        productId:     STATE.productId,
+        customerName:  STATE.customerName,
         customerEmail: STATE.customerEmail,
       }),
     });
@@ -1414,167 +1167,24 @@ async function verifyAndRecord(razorpayResponse) {
     if (!res.ok) throw new Error(data.error || 'Verification failed');
 
     hideProcessing();
-    // Store order ID for invoice generation
-    STATE.lastOrderId = data.orderId;
-    showThankyou(data.orderNumber);
+
+    // ── Redirect to dedicated thank-you page ──────────────────────
+    window.location.href = '/thankyou/' + data.orderId;
+
   } catch (err) {
     hideProcessing();
-    showToast('Payment recorded but verification issue: ' + err.message, true);
-    // Still show thank you since payment succeeded on Razorpay
-    showThankyou(null);
+    console.error('verify error:', err);
+    // Payment succeeded on Razorpay — show a soft error and let them retry manually
+    showToast('Payment recorded — redirecting…', false);
+    // Attempt redirect even on partial error if we have an id somewhere
+    setTimeout(() => {
+      showError(
+        'Almost there!',
+        'Your payment was received. Please check your email or contact support with your payment ID: ' +
+        (razorpayResponse.razorpay_payment_id || 'N/A')
+      );
+    }, 2000);
   }
-}
-
-/* ── Thank You ──────────────────────────────────────────────── */
-function showThankyou(orderNumber) {
-  document.getElementById('ty-order-num').textContent = orderNumber || 'CS-' + Date.now().toString(36).toUpperCase();
-  document.getElementById('ty-name').textContent = STATE.customerName;
-  document.getElementById('ty-email').textContent = STATE.customerEmail;
-  document.getElementById('ty-product').textContent = STATE.product?.Product_name || 'Product';
-
-  const dlBtn = document.getElementById('download-btn');
-  const dlLink = STATE.product?.Product_download_link;
-  if (dlLink) {
-    dlBtn.href = dlLink;
-    dlBtn.style.display = 'flex';
-  } else {
-    dlBtn.style.display = 'none';
-  }
-  
-  // Show invoice button
-  const invoiceBtn = document.getElementById('invoice-btn');
-  if (STATE.lastOrderId) {
-    invoiceBtn.style.display = 'flex';
-  } else {
-    invoiceBtn.style.display = 'none';
-  }
-
-  showPage('thankyou');
-}
-
-/* ── Invoice Download ──────────────────────────────────────────────── */
-function downloadInvoice() {
-  if (!STATE.lastOrderId) {
-    showToast('Invoice not available', true);
-    return;
-  }
-  
-  // Generate simple HTML invoice
-  const invoice = generateInvoiceHTML();
-  const blob = new Blob([invoice], { type: 'text/html' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `invoice-${STATE.lastOrderId}.html`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  showToast('Invoice downloaded', false);
-}
-
-function generateInvoiceHTML() {
-  const now = new Date().toLocaleDateString('en-IN', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
-  
-  return `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="UTF-8">
-      <title>Invoice - Creatorstack</title>
-      <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; padding: 20px; }
-        .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
-        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; border-bottom: 2px solid #B8935A; padding-bottom: 20px; }
-        .logo { font-size: 28px; font-weight: 600; color: #1C1B18; letter-spacing: -1px; }
-        .invoice-number { text-align: right; }
-        .invoice-number .label { font-size: 12px; color: #999; text-transform: uppercase; }
-        .invoice-number .value { font-size: 18px; font-weight: 600; color: #1C1B18; }
-        .details { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-        .detail-group { }
-        .detail-group .label { font-size: 12px; color: #999; text-transform: uppercase; margin-bottom: 4px; }
-        .detail-group .value { font-size: 14px; color: #1C1B18; line-height: 1.6; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
-        table th { background: #F4F3EF; padding: 12px; text-align: left; font-weight: 600; font-size: 13px; color: #6B6760; text-transform: uppercase; border-radius: 4px 4px 0 0; }
-        table td { padding: 16px 12px; border-bottom: 1px solid #E6E4DE; }
-        table tr:last-child td { border-bottom: none; }
-        .amount-section { display: flex; justify-content: flex-end; margin-bottom: 40px; }
-        .amount-box { width: 300px; }
-        .amount-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; }
-        .amount-row.total { border-top: 2px solid #B8935A; padding-top: 12px; font-weight: 600; font-size: 18px; color: #1C1B18; }
-        .note { background: #F4F3EF; padding: 16px; border-radius: 4px; font-size: 13px; color: #6B6760; line-height: 1.6; margin-bottom: 20px; }
-        .footer { text-align: center; color: #999; font-size: 12px; border-top: 1px solid #E6E4DE; padding-top: 20px; margin-top: 40px; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <div class="logo">Creatorstack</div>
-          <div class="invoice-number">
-            <div class="label">Order Number</div>
-            <div class="value">${document.getElementById('ty-order-num').textContent}</div>
-          </div>
-        </div>
-        
-        <div class="details">
-          <div class="detail-group">
-            <div class="label">Bill To</div>
-            <div class="value">
-              ${STATE.customerName}<br>
-              ${STATE.customerEmail}
-            </div>
-          </div>
-          <div class="detail-group">
-            <div class="label">Invoice Details</div>
-            <div class="value">
-              Date: ${now}<br>
-              Status: Paid
-            </div>
-          </div>
-        </div>
-        
-        <table>
-          <thead>
-            <tr>
-              <th>Description</th>
-              <th style="text-align: right;">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>${STATE.product.Product_name}</td>
-              <td style="text-align: right; font-weight: 600;">₹${formatPrice(STATE.product.Product_price)}</td>
-            </tr>
-          </tbody>
-        </table>
-        
-        <div class="amount-section">
-          <div class="amount-box">
-            <div class="amount-row total">
-              <span>Total Amount Paid</span>
-              <span>₹${formatPrice(STATE.product.Product_price)}</span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="note">
-          <strong>Thank you for your purchase!</strong> Your digital product has been delivered. You can download it from your confirmation email or the download link provided on the website. If you need any assistance, feel free to reach out to our support team.
-        </div>
-        
-        <div class="footer">
-          <p>This is an automatically generated invoice. Creatorstack • Digital Products Store</p>
-        </div>
-      </div>
-    </body>
-    </html>
-  `;
 }
 
 /* ══════════════════════════════════════════════════════════════
