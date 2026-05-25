@@ -1031,10 +1031,16 @@ const STATE = {
    INIT
 ══════════════════════════════════════════════════════════════ */
 (async function init() {
-  const productId = parseProductId();
-  if (!productId) return showError('No Product URL', 'Please visit a valid product link, e.g. yourstore.com/product-id');
+  // Detect if we're on the thank you page
+  const currentPath = window.location.pathname;
+  const isThankyouPage = currentPath.startsWith('/thankyou');
 
-  STATE.productId = productId;
+  // Only parse product ID if NOT on thank you page
+  if (!isThankyouPage) {
+    const productId = parseProductId();
+    if (!productId) return showError('No Product URL', 'Please visit a valid product link, e.g. yourstore.com/product-id');
+    STATE.productId = productId;
+  }
 
   try {
     // 1. Fetch public config from serverless function
@@ -1045,18 +1051,23 @@ const STATE = {
     // 2. Init Supabase client with anon key (read-only for products)
     STATE.supabase = supabase.createClient(STATE.config.supabaseUrl, STATE.config.supabaseAnonKey);
 
-    // 3. Load product
-    const { data, error } = await STATE.supabase
-      .from('Products')
-      .select('*')
-      .eq('id', productId)
-      .single();
+    // 3. Load product only if NOT on thank you page
+    if (!isThankyouPage && STATE.productId) {
+      const { data, error } = await STATE.supabase
+        .from('Products')
+        .select('*')
+        .eq('id', STATE.productId)
+        .single();
 
-    if (error || !data) return showError('Product Not Found', 'This product doesn\'t exist or is no longer available.');
+      if (error || !data) return showError('Product Not Found', 'This product doesn\'t exist or is no longer available.');
 
-    STATE.product = data;
-    renderProduct(data);
-    showPage('product');
+      STATE.product = data;
+      renderProduct(data);
+      showPage('product');
+    } else if (isThankyouPage) {
+      // On thank you page, just show the thank you page
+      showPage('thankyou');
+    }
   } catch (err) {
     console.error(err);
     showError('Something went wrong', err.message || 'Please refresh and try again.');
@@ -1419,10 +1430,10 @@ function showThankyou(orderNumber) {
   document.getElementById('ty-order-num').textContent = orderNumber || 'CS-' + Date.now().toString(36).toUpperCase();
   document.getElementById('ty-name').textContent = STATE.customerName;
   document.getElementById('ty-email').textContent = STATE.customerEmail;
-  document.getElementById('ty-product').textContent = STATE.product.Product_name || '—';
+  document.getElementById('ty-product').textContent = STATE.product?.Product_name || 'Product';
 
   const dlBtn = document.getElementById('download-btn');
-  const dlLink = STATE.product.Product_download_link;
+  const dlLink = STATE.product?.Product_download_link;
   if (dlLink) {
     dlBtn.href = dlLink;
     dlBtn.style.display = 'flex';
