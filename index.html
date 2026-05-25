@@ -9,16 +9,13 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
   <!-- Razorpay -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-  <!-- html2pdf for invoice generation -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
     /* ── Reset & Base ───────────────────────────────────────────── */
@@ -630,7 +627,7 @@
     }
 
     .thankyou-top {
-      background: linear-gradient(150deg, var(--green-pale) 0%, #fff 70%);
+      background: linear-gradient(150deg, var(--gold-pale) 0%, #fff 70%);
       padding: 48px 32px 32px;
       position: relative;
       overflow: hidden;
@@ -640,7 +637,7 @@
       position: absolute;
       width: 300px;
       height: 300px;
-      background: radial-gradient(circle, rgba(61,138,110,.12) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(184,147,90,.12) 0%, transparent 70%);
       top: -80px; right: -80px;
       pointer-events: none;
     }
@@ -655,7 +652,6 @@
       justify-content: center;
       margin: 0 auto 20px;
       position: relative;
-      box-shadow: 0 0 0 12px rgba(61,138,110,.08);
     }
     .success-icon-wrap::after {
       content: '';
@@ -670,20 +666,6 @@
       100% { transform: scale(1.4); opacity: 0; }
     }
     .success-icon-wrap svg { width: 32px; height: 32px; stroke: var(--green); fill: none; stroke-width: 2.5; }
-
-    .payment-status-badge {
-      display: inline-block;
-      background: var(--green-pale);
-      color: var(--green);
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: .75rem;
-      font-weight: 600;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      border: 1px solid rgba(61,138,110,.2);
-      margin-bottom: 12px;
-    }
 
     .thankyou-title {
       font-family: var(--font-display);
@@ -726,69 +708,6 @@
     .email-notice-text { font-size: .83rem; color: var(--green); line-height: 1.5; }
     .email-notice-text strong { font-weight: 600; }
 
-    .resend-section {
-      background: var(--surface-2);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-sm);
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .resend-label {
-      font-size: .8rem;
-      color: var(--text-3);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-    }
-    .resend-counter {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: .85rem;
-      color: var(--text-2);
-    }
-    .resend-badge {
-      display: inline-block;
-      background: var(--gold-pale);
-      color: var(--gold);
-      padding: 2px 8px;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: .75rem;
-    }
-    .btn-resend {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      padding: 12px 16px;
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text-1);
-      font-family: var(--font-body);
-      font-size: .875rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all .2s ease;
-      letter-spacing: .01em;
-    }
-    .btn-resend:hover { 
-      border-color: var(--gold);
-      background: var(--gold-pale);
-      color: var(--gold);
-    }
-    .btn-resend:disabled { 
-      opacity: .5; 
-      pointer-events: none; 
-      background: var(--surface-2);
-      border-color: var(--border);
-    }
-    .btn-resend svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
-
     .btn-download {
       display: flex;
       align-items: center;
@@ -811,42 +730,6 @@
     .btn-download:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(184,147,90,.35); filter: brightness(1.05); }
     .btn-download:active { transform: translateY(0); }
     .btn-download svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
-
-    .btn-secondary {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      padding: 16px 28px;
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      color: var(--text-1);
-      border-radius: var(--radius);
-      font-family: var(--font-body);
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all .25s ease;
-      letter-spacing: .01em;
-    }
-    .btn-secondary:hover { 
-      border-color: var(--text-2);
-      background: var(--surface-2);
-    }
-    .btn-secondary svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
-
-    /* Hidden invoice template for PDF generation */
-    .invoice-template {
-      display: none;
-      width: 210mm;
-      height: 297mm;
-      padding: 20mm;
-      background: #fff;
-      font-family: var(--font-body);
-      color: var(--text-1);
-    }
 
     /* ══════════════════════════════════════════════════════════════
        RESPONSIVE — Mobile
@@ -912,7 +795,7 @@
       .checkout-header { flex-direction: column; gap: 10px; }
       .checkout-price-badge { align-self: flex-start; }
       
-      .btn-download, .btn-secondary {
+      .btn-download {
         font-size: .95rem;
         padding: 14px 20px;
       }
@@ -974,7 +857,7 @@
       <!-- Right: Info -->
       <div class="product-info">
         <span class="product-badge">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l-3-4z"/></svg>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           Digital Product
         </span>
         <h1 id="product-name" class="product-name display">—</h1>
@@ -1065,7 +948,6 @@
         <div class="success-icon-wrap">
           <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <div class="payment-status-badge">✓ Payment Completed</div>
         <h2 class="thankyou-title display">Thank You!</h2>
         <p class="thankyou-sub">
           Your purchase is confirmed.<br />Your download is ready below.
@@ -1095,28 +977,15 @@
         <div class="email-notice">
           <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           <p class="email-notice-text">
-            <strong>Confirmation recorded.</strong> Your order details have been saved. Download your product and invoice below.
+            <strong>Confirmation recorded.</strong> Your order details have been saved. The download link is available below.
           </p>
-        </div>
-
-        <div class="resend-section">
-          <p class="resend-label">Resend Product Link</p>
-          <div class="resend-counter">
-            <span id="resend-count">You have <strong><span id="resend-remaining">5</span> resend(s) left</strong></span>
-            <span class="resend-badge" id="resend-badge">5/5</span>
-          </div>
-          <button id="btn-resend" class="btn-resend" onclick="resendProductEmail()">
-            <svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
-            <span>Resend to Email</span>
-          </button>
         </div>
 
         <a id="download-btn" class="btn-download" href="#" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Download Your Product
         </a>
-
-        <button id="invoice-btn" class="btn-secondary" onclick="downloadInvoice()">
+        <button id="invoice-btn" class="btn-download" style="background: linear-gradient(135deg, var(--gold-light), var(--gold)); display: none; gap: 10px;" onclick="downloadInvoice()">
           <svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
           Download Invoice
         </button>
@@ -1129,568 +998,607 @@
 
 <!-- Processing Overlay -->
 <div class="processing-overlay" id="processing-overlay">
-  <div class="spinner" style="width: 48px; height: 48px; border-width: 3px;"></div>
-  <p class="processing-text display">Processing…</p>
-  <p class="processing-sub">Please wait while we secure your order</p>
+  <div class="spinner" style="width:44px;height:44px;border-width:3px;"></div>
+  <p class="processing-text display" id="processing-text">Processing…</p>
+  <p class="processing-sub" id="processing-sub">Please wait, do not close this tab.</p>
 </div>
 
-<!-- Toast Notification -->
+<!-- Toast -->
 <div id="toast"></div>
 
-<!-- Hidden invoice template -->
-<div id="invoice-template" class="invoice-template"></div>
-
+<!-- ── Application Script ──────────────────────────────────────── -->
 <script>
-  // ══════════════════════════════════════════════════════════════
-  // STATE & GLOBALS
-  // ══════════════════════════════════════════════════════════════
-  let supabase;
-  let currentProduct = null;
-  let currentOrder = null;
+/* ══════════════════════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════════════════════ */
+const STATE = {
+  config: null,          // { supabaseUrl, supabaseAnonKey, razorpayKeyId }
+  supabase: null,        // supabase client
+  product: null,         // product row from DB
+  productId: null,       // UUID from URL
+  images: [],            // parsed image URLs
+  carouselIndex: 0,
+  isDragging: false,
+  dragStartX: 0,
+  dragCurrentX: 0,
+  customerName: '',
+  customerEmail: '',
+  razorpayOrderId: null,
+  lastOrderId: null,     // order ID from database
+};
 
-  const MAX_RESENDS = 5;
+/* ══════════════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════════════ */
+(async function init() {
+  // Detect if we're on the thank you page
+  const currentPath = window.location.pathname;
+  const isThankyouPage = currentPath.startsWith('/thankyou');
 
-  // ══════════════════════════════════════════════════════════════
-  // INITIALIZATION
-  // ══════════════════════════════════════════════════════════════
-  async function initApp() {
-    try {
-      // Get Supabase config from API
-      const configRes = await fetch('/api/config');
-      const config = await configRes.json();
-      
-      // Initialize Supabase
-      supabase = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
-      
-      // Route to appropriate page
-      routePage();
-    } catch (err) {
-      console.error('Init error:', err);
-      showError('Failed to initialize', 'Please refresh the page');
-    }
+  // Only parse product ID if NOT on thank you page
+  if (!isThankyouPage) {
+    const productId = parseProductId();
+    if (!productId) return showError('No Product URL', 'Please visit a valid product link, e.g. yourstore.com/product-id');
+    STATE.productId = productId;
   }
 
-  // ══════════════════════════════════════════════════════════════
-  // PAGE ROUTING
-  // ══════════════════════════════════════════════════════════════
-  async function routePage() {
-    const path = window.location.pathname;
-    const match = path.match(/^\/([a-f0-9\-]+)$/i);
-    const thankYouMatch = path.match(/^\/thankyou\/(\d+)$/i);
+  try {
+    // 1. Fetch public config from serverless function
+    const cfgRes = await fetch('/api/config');
+    if (!cfgRes.ok) throw new Error('Config fetch failed');
+    STATE.config = await cfgRes.json();
 
-    // Hide loading
-    document.getElementById('page-loading').style.display = 'none';
+    // 2. Init Supabase client with anon key (read-only for products)
+    STATE.supabase = supabase.createClient(STATE.config.supabaseUrl, STATE.config.supabaseAnonKey);
 
-    if (thankYouMatch) {
-      // Thank you page
-      const orderId = parseInt(thankYouMatch[1]);
-      await loadThankYouPage(orderId);
-    } else if (match) {
-      // Product page
-      const productId = match[1];
-      await loadProductPage(productId);
-    } else {
-      // Error
-      showError('Not Found', 'This page does not exist');
-    }
-  }
-
-  // ══════════════════════════════════════════════════════════════
-  // PRODUCT PAGE
-  // ══════════════════════════════════════════════════════════════
-  async function loadProductPage(productId) {
-    try {
-      // Fetch product from Supabase
-      const { data, error } = await supabase
+    // 3. Load product only if NOT on thank you page
+    if (!isThankyouPage && STATE.productId) {
+      const { data, error } = await STATE.supabase
         .from('Products')
         .select('*')
-        .eq('id', productId)
+        .eq('id', STATE.productId)
         .single();
 
-      if (error || !data) {
-        showError('Product Not Found', 'The product you\'re looking for doesn\'t exist or has been removed.');
-        return;
-      }
+      if (error || !data) return showError('Product Not Found', 'This product doesn\'t exist or is no longer available.');
 
-      currentProduct = data;
-      populateProductPage(data);
-      showPage('page-product');
-    } catch (err) {
-      console.error('Product load error:', err);
-      showError('Error Loading Product', 'Please try again later');
+      STATE.product = data;
+      renderProduct(data);
+      showPage('product');
+    } else if (isThankyouPage) {
+      // On thank you page, just show the thank you page
+      showPage('thankyou');
     }
+  } catch (err) {
+    console.error(err);
+    showError('Something went wrong', err.message || 'Please refresh and try again.');
+  }
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   URL PARSING
+══════════════════════════════════════════════════════════════ */
+function parseProductId() {
+  const path = window.location.pathname.replace(/^\//, '').split('/')[0];
+  // Basic UUID validation
+  if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(path)) return path;
+  return null;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PAGE MANAGEMENT
+══════════════════════════════════════════════════════════════ */
+function showPage(name) {
+  ['product','checkout','thankyou'].forEach(p => {
+    const el = document.getElementById('page-' + p);
+    el.classList.remove('active');
+    el.style.display = '';
+  });
+  // Hide loading
+  document.getElementById('page-loading').style.display = 'none';
+  document.getElementById('page-error').style.display = 'none';
+
+  const target = document.getElementById('page-' + name);
+  target.style.display = name === 'product' ? 'block' : 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    target.classList.add('active');
+  }));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showError(title, msg) {
+  document.getElementById('page-loading').style.display = 'none';
+  document.getElementById('error-title').textContent = title;
+  document.getElementById('error-msg').textContent = msg;
+  document.getElementById('page-error').style.display = 'flex';
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RENDER PRODUCT
+══════════════════════════════════════════════════════════════ */
+function renderProduct(p) {
+  document.title = (p.Product_name || 'Product') + ' — Creatorstack';
+
+  document.getElementById('product-name').textContent = p.Product_name || 'Untitled Product';
+  
+  // Handle description with br tag support
+  const descElement = document.getElementById('product-description');
+  if (p.Product_description) {
+    descElement.innerHTML = (p.Product_description || '')
+      .replace(/\n/g, '<br />')
+      .replace(/&lt;br&gt;/g, '<br />');
+  } else {
+    descElement.textContent = '';
+  }
+  
+  document.getElementById('product-price').textContent = formatPrice(p.Product_price);
+  
+  // Handle strikethrough price and savings
+  const originalPrice = p.strikethrough_price;
+  const currentPrice = p.Product_price;
+  const priceOriginalEl = document.getElementById('price-original');
+  const priceSavingsEl = document.getElementById('price-savings');
+  
+  if (originalPrice && originalPrice > currentPrice) {
+    const savings = Math.round(((originalPrice - currentPrice) / originalPrice) * 100);
+    priceOriginalEl.textContent = '₹' + formatPrice(originalPrice);
+    priceOriginalEl.style.display = 'inline-block';
+    document.getElementById('savings-percent').textContent = `Save ${savings}%`;
+    priceSavingsEl.style.display = 'inline-flex';
+  } else {
+    priceOriginalEl.style.display = 'none';
+    priceSavingsEl.style.display = 'none';
   }
 
-  function populateProductPage(product) {
-    document.getElementById('product-name').textContent = product.Product_name || '—';
-    document.getElementById('product-description').textContent = product.Product_description || '—';
-    document.getElementById('product-price').textContent = product.Product_price || '—';
-    document.getElementById('checkout-product-name').textContent = product.Product_name || '—';
-    document.getElementById('checkout-price-badge').textContent = '₹' + (product.Product_price || '—');
-    document.getElementById('pay-amount-label').textContent = '₹' + (product.Product_price || '—');
+  // Parse images
+  STATE.images = (p.Product_image_url || '')
+    .split(',')
+    .map(u => u.trim())
+    .filter(Boolean);
 
-    // Handle strikethrough price
-    if (product.strikethrough_price && product.strikethrough_price > product.Product_price) {
-      document.getElementById('price-original').style.display = 'inline-block';
-      document.getElementById('price-original').textContent = '₹' + product.strikethrough_price;
-      
-      // Calculate savings
-      const savings = Math.round(((product.strikethrough_price - product.Product_price) / product.strikethrough_price) * 100);
-      document.getElementById('price-savings').style.display = 'inline-flex';
-      document.getElementById('savings-percent').textContent = savings + '% OFF';
+  if (!STATE.images.length) STATE.images = [''];
+
+  buildCarousel(STATE.images);
+}
+
+function formatPrice(price) {
+  if (!price && price !== 0) return '—';
+  return Number(price).toLocaleString('en-IN');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CAROUSEL
+══════════════════════════════════════════════════════════════ */
+function buildCarousel(images) {
+  const track = document.getElementById('carousel-track');
+  const dotsEl = document.getElementById('carousel-dots');
+
+  track.innerHTML = '';
+  dotsEl.innerHTML = '';
+
+  images.forEach((url, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'carousel-slide';
+
+    if (url) {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'img-placeholder';
+      slide.appendChild(placeholder);
+
+      const img = document.createElement('img');
+      img.alt = (STATE.product.Product_name || 'Product') + ' image ' + (i + 1);
+      img.loading = i === 0 ? 'eager' : 'lazy';
+      img.onload = () => placeholder.remove();
+      img.onerror = () => { placeholder.remove(); img.style.display = 'none'; };
+      img.src = url;
+      slide.appendChild(img);
+    } else {
+      // Placeholder when no image
+      slide.style.display = 'flex';
+      slide.style.alignItems = 'center';
+      slide.style.justifyContent = 'center';
+      slide.style.background = '#F0EFE9';
+      slide.innerHTML = '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#C8C5BE" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
     }
 
-    // Handle carousel
-    populateCarousel(product.Product_image_url);
-  }
+    track.appendChild(slide);
 
-  function populateCarousel(imageUrlString) {
-    if (!imageUrlString) return;
-    
-    const imageUrls = imageUrlString.split(',').map(url => url.trim()).filter(url => url);
-    const track = document.getElementById('carousel-track');
-    const dots = document.getElementById('carousel-dots');
-    
-    track.innerHTML = '';
-    dots.innerHTML = '';
-
-    imageUrls.forEach((url, index) => {
-      // Slide
-      const slide = document.createElement('div');
-      slide.className = 'carousel-slide';
-      slide.innerHTML = `
-        <div class="img-placeholder"></div>
-        <img src="${url}" alt="Product image ${index + 1}" loading="lazy" />
-      `;
-      track.appendChild(slide);
-
-      // Dot
+    // Dot
+    if (images.length > 1) {
       const dot = document.createElement('button');
-      dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
-      dot.onclick = (e) => {
-        e.preventDefault();
-        goToSlide(index);
-      };
-      dots.appendChild(dot);
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Image ' + (i + 1));
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsEl.appendChild(dot);
+    }
+  });
+
+  // Show/hide nav buttons
+  const showNav = images.length > 1;
+  document.getElementById('carousel-prev').style.display = showNav ? 'flex' : 'none';
+  document.getElementById('carousel-next').style.display = showNav ? 'flex' : 'none';
+
+  // Event listeners
+  document.getElementById('carousel-prev').onclick = () => goToSlide(STATE.carouselIndex - 1);
+  document.getElementById('carousel-next').onclick = () => goToSlide(STATE.carouselIndex + 1);
+
+  setupCarouselDrag();
+  goToSlide(0, false);
+}
+
+function goToSlide(index, animate = true) {
+  const count = STATE.images.length;
+  STATE.carouselIndex = ((index % count) + count) % count;
+
+  const track = document.getElementById('carousel-track');
+  if (!animate) track.style.transition = 'none';
+  track.style.transform = `translateX(-${STATE.carouselIndex * 100}%)`;
+  if (!animate) requestAnimationFrame(() => { track.style.transition = ''; });
+
+  // Update dots
+  document.querySelectorAll('.carousel-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === STATE.carouselIndex);
+  });
+}
+
+function setupCarouselDrag() {
+  const carousel = document.getElementById('carousel');
+
+  // Mouse
+  carousel.addEventListener('mousedown', e => { STATE.isDragging = true; STATE.dragStartX = e.clientX; });
+  window.addEventListener('mousemove', e => {
+    if (!STATE.isDragging) return;
+    STATE.dragCurrentX = e.clientX;
+  });
+  window.addEventListener('mouseup', () => {
+    if (!STATE.isDragging) return;
+    STATE.isDragging = false;
+    const diff = STATE.dragStartX - STATE.dragCurrentX;
+    if (Math.abs(diff) > 40) goToSlide(STATE.carouselIndex + (diff > 0 ? 1 : -1));
+  });
+
+  // Touch
+  carousel.addEventListener('touchstart', e => { STATE.dragStartX = e.touches[0].clientX; }, { passive: true });
+  carousel.addEventListener('touchend', e => {
+    const diff = STATE.dragStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goToSlide(STATE.carouselIndex + (diff > 0 ? 1 : -1));
+  }, { passive: true });
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CHECKOUT FLOW
+══════════════════════════════════════════════════════════════ */
+function showCheckout() {
+  const p = STATE.product;
+  document.getElementById('checkout-product-name').textContent = p.Product_name || 'Product';
+  document.getElementById('checkout-price-badge').textContent = '₹' + formatPrice(p.Product_price);
+  document.getElementById('pay-amount-label').textContent = '₹' + formatPrice(p.Product_price);
+
+  // Re-fill if returning
+  document.getElementById('input-name').value = STATE.customerName;
+  document.getElementById('input-email').value = STATE.customerEmail;
+
+  showPage('checkout');
+  setTimeout(() => document.getElementById('input-name').focus(), 400);
+}
+
+function showProduct() {
+  showPage('product');
+}
+
+/* ── Validation ────────────────────────────────────────────── */
+function validateCheckout() {
+  let valid = true;
+
+  const name = document.getElementById('input-name').value.trim();
+  const email = document.getElementById('input-email').value.trim();
+
+  const nameInput = document.getElementById('input-name');
+  const emailInput = document.getElementById('input-email');
+  const errName = document.getElementById('err-name');
+  const errEmail = document.getElementById('err-email');
+
+  // Reset
+  nameInput.classList.remove('error'); errName.classList.remove('show');
+  emailInput.classList.remove('error'); errEmail.classList.remove('show');
+
+  if (!name || name.length < 2) {
+    nameInput.classList.add('error'); errName.classList.add('show');
+    valid = false;
+  }
+
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email || !emailRe.test(email)) {
+    emailInput.classList.add('error'); errEmail.classList.add('show');
+    valid = false;
+  }
+
+  if (valid) {
+    STATE.customerName = name;
+    STATE.customerEmail = email;
+  }
+  return valid;
+}
+
+// Clear error styling on input
+['input-name','input-email'].forEach(id => {
+  document.getElementById(id).addEventListener('input', function() {
+    this.classList.remove('error');
+    const suffix = id.split('-')[1];
+    document.getElementById('err-' + suffix).classList.remove('show');
+  });
+});
+
+/* ── Razorpay flow ──────────────────────────────────────────── */
+async function initiatePayment() {
+  if (!validateCheckout()) return;
+
+  const payBtn = document.getElementById('btn-pay');
+  payBtn.disabled = true;
+
+  showProcessing('Creating secure payment…', 'Please wait a moment.');
+
+  try {
+    // 1. Create Razorpay order on server
+    const res = await fetch('/api/create-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        amount: STATE.product.Product_price,
+        productId: STATE.productId,
+      }),
     });
 
-    setupCarouselControls(imageUrls.length);
-  }
+    const orderData = await res.json();
+    if (!res.ok) throw new Error(orderData.error || 'Could not create payment order.');
 
-  function setupCarouselControls(count) {
-    let currentSlide = 0;
+    STATE.razorpayOrderId = orderData.orderId;
 
-    document.getElementById('carousel-prev').onclick = () => {
-      currentSlide = (currentSlide - 1 + count) % count;
-      goToSlide(currentSlide);
+    hideProcessing();
+
+    // 2. Open Razorpay modal
+    const rzpOptions = {
+      key: STATE.config.razorpayKeyId,
+      amount: orderData.amount,
+      currency: orderData.currency,
+      order_id: orderData.orderId,
+      name: 'Creatorstack',
+      description: STATE.product.Product_name,
+      prefill: {
+        name: STATE.customerName,
+        email: STATE.customerEmail,
+      },
+      theme: { color: '#B8935A' },
+      modal: {
+        ondismiss: () => {
+          payBtn.disabled = false;
+          showToast('Payment cancelled', false);
+        },
+      },
+      handler: async function(response) {
+        showProcessing('Verifying payment…', 'Almost there, do not close this tab.');
+        await verifyAndRecord(response);
+      },
     };
 
-    document.getElementById('carousel-next').onclick = () => {
-      currentSlide = (currentSlide + 1) % count;
-      goToSlide(currentSlide);
-    };
-  }
-
-  function goToSlide(index) {
-    const track = document.getElementById('carousel-track');
-    track.style.transform = `translateX(-${index * 100}%)`;
-
-    document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
-      dot.classList.toggle('active', i === index);
+    const rzp = new Razorpay(rzpOptions);
+    rzp.on('payment.failed', function(resp) {
+      hideProcessing();
+      payBtn.disabled = false;
+      showToast('Payment failed: ' + (resp.error.description || 'Unknown error'), true);
     });
+    rzp.open();
+
+  } catch (err) {
+    hideProcessing();
+    payBtn.disabled = false;
+    showToast(err.message || 'Something went wrong, please try again.', true);
+  }
+}
+
+async function verifyAndRecord(razorpayResponse) {
+  try {
+    const res = await fetch('/api/verify-payment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        razorpay_order_id:  razorpayResponse.razorpay_order_id,
+        razorpay_payment_id: razorpayResponse.razorpay_payment_id,
+        razorpay_signature:  razorpayResponse.razorpay_signature,
+        productId:    STATE.productId,
+        customerName: STATE.customerName,
+        customerEmail: STATE.customerEmail,
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Verification failed');
+
+    hideProcessing();
+    // Store order ID for invoice generation
+    STATE.lastOrderId = data.orderId;
+    showThankyou(data.orderNumber);
+  } catch (err) {
+    hideProcessing();
+    showToast('Payment recorded but verification issue: ' + err.message, true);
+    // Still show thank you since payment succeeded on Razorpay
+    showThankyou(null);
+  }
+}
+
+/* ── Thank You ──────────────────────────────────────────────── */
+function showThankyou(orderNumber) {
+  document.getElementById('ty-order-num').textContent = orderNumber || 'CS-' + Date.now().toString(36).toUpperCase();
+  document.getElementById('ty-name').textContent = STATE.customerName;
+  document.getElementById('ty-email').textContent = STATE.customerEmail;
+  document.getElementById('ty-product').textContent = STATE.product?.Product_name || 'Product';
+
+  const dlBtn = document.getElementById('download-btn');
+  const dlLink = STATE.product?.Product_download_link;
+  if (dlLink) {
+    dlBtn.href = dlLink;
+    dlBtn.style.display = 'flex';
+  } else {
+    dlBtn.style.display = 'none';
+  }
+  
+  // Show invoice button
+  const invoiceBtn = document.getElementById('invoice-btn');
+  if (STATE.lastOrderId) {
+    invoiceBtn.style.display = 'flex';
+  } else {
+    invoiceBtn.style.display = 'none';
   }
 
-  // ══════════════════════════════════════════════════════════════
-  // CHECKOUT
-  // ══════════════════════════════════════════════════════════════
-  function showCheckout() {
-    showPage('page-checkout');
+  showPage('thankyou');
+}
+
+/* ── Invoice Download ──────────────────────────────────────────────── */
+function downloadInvoice() {
+  if (!STATE.lastOrderId) {
+    showToast('Invoice not available', true);
+    return;
   }
+  
+  // Generate simple HTML invoice
+  const invoice = generateInvoiceHTML();
+  const blob = new Blob([invoice], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `invoice-${STATE.lastOrderId}.html`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('Invoice downloaded', false);
+}
 
-  async function initiatePayment() {
-    // Validate form
-    const name = document.getElementById('input-name').value.trim();
-    const email = document.getElementById('input-email').value.trim();
-
-    let isValid = true;
-
-    if (!name) {
-      document.getElementById('input-name').classList.add('error');
-      document.getElementById('err-name').classList.add('show');
-      isValid = false;
-    } else {
-      document.getElementById('input-name').classList.remove('error');
-      document.getElementById('err-name').classList.remove('show');
-    }
-
-    if (!email || !isValidEmail(email)) {
-      document.getElementById('input-email').classList.add('error');
-      document.getElementById('err-email').classList.add('show');
-      isValid = false;
-    } else {
-      document.getElementById('input-email').classList.remove('error');
-      document.getElementById('err-email').classList.remove('show');
-    }
-
-    if (!isValid) return;
-
-    // Show processing
-    document.getElementById('processing-overlay').classList.add('show');
-
-    try {
-      // Create Razorpay order
-      const orderRes = await fetch('/api/create-order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          amount: currentProduct.Product_price,
-          customer_name: name,
-          customer_email: email,
-          product_id: currentProduct.id
-        })
-      });
-
-      const orderData = await orderRes.json();
-      if (!orderData.razorpay_order_id) throw new Error('Failed to create order');
-
-      // Store order details for verification
-      sessionStorage.setItem('current_order', JSON.stringify({
-        razorpay_order_id: orderData.razorpay_order_id,
-        customer_name: name,
-        customer_email: email,
-        product_id: currentProduct.id,
-        amount: currentProduct.Product_price
-      }));
-
-      // Initialize Razorpay checkout
-      const options = {
-        key: orderData.razorpay_key_id,
-        amount: currentProduct.Product_price * 100,
-        currency: 'INR',
-        order_id: orderData.razorpay_order_id,
-        customer_name: name,
-        customer_email: email,
-        handler: handlePaymentSuccess,
-        modal: { ondismiss: handlePaymentClosed }
-      };
-
-      const rzp = new Razorpay(options);
-      rzp.open();
-    } catch (err) {
-      console.error('Payment initiation error:', err);
-      showToast('Payment initiation failed', true);
-      document.getElementById('processing-overlay').classList.remove('show');
-    }
-  }
-
-  async function handlePaymentSuccess(response) {
-    try {
-      document.getElementById('processing-overlay').classList.add('show');
-
-      // Get order details from session
-      const orderData = JSON.parse(sessionStorage.getItem('current_order'));
-
-      // Verify payment on backend
-      const verifyRes = await fetch('/api/verify-payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          razorpay_order_id: response.razorpay_order_id,
-          razorpay_payment_id: response.razorpay_payment_id,
-          razorpay_signature: response.razorpay_signature,
-          customer_name: orderData.customer_name,
-          customer_email: orderData.customer_email,
-          product_id: orderData.product_id
-        })
-      });
-
-      const verifyData = await verifyRes.json();
-      if (!verifyData.success) throw new Error('Payment verification failed');
-
-      // Payment successful - get the order ID from response
-      const orderId = verifyData.order_id;
-
-      // Create email request in database
-      await createEmailRequest(orderId);
-
-      // Clear session data
-      sessionStorage.removeItem('current_order');
-
-      // REDIRECT TO THANK YOU PAGE
-      window.location.href = `/thankyou/${orderId}`;
-    } catch (err) {
-      console.error('Payment verification error:', err);
-      showToast('Payment verification failed', true);
-      document.getElementById('processing-overlay').classList.remove('show');
-    }
-  }
-
-  function handlePaymentClosed() {
-    document.getElementById('processing-overlay').classList.remove('show');
-    showToast('Payment cancelled', true);
-  }
-
-  // ══════════════════════════════════════════════════════════════
-  // THANK YOU PAGE
-  // ══════════════════════════════════════════════════════════════
-  async function loadThankYouPage(orderId) {
-    try {
-      // Fetch order from Supabase
-      const { data: order, error: orderError } = await supabase
-        .from('Orders')
-        .select('*')
-        .eq('id', orderId)
-        .single();
-
-      if (orderError || !order) {
-        showError('Order Not Found', 'This order does not exist.');
-        return;
-      }
-
-      // Fetch product details
-      const { data: product, error: productError } = await supabase
-        .from('Products')
-        .select('*')
-        .eq('id', order.Product)
-        .single();
-
-      if (productError || !product) {
-        showError('Product Not Found', 'The product for this order was not found.');
-        return;
-      }
-
-      currentOrder = order;
-      currentProduct = product;
-
-      populateThankYouPage(order, product);
-      showPage('page-thankyou');
-    } catch (err) {
-      console.error('Thank you page load error:', err);
-      showError('Error Loading Order', 'Please try again later');
-    }
-  }
-
-  function populateThankYouPage(order, product) {
-    document.getElementById('ty-order-num').textContent = order.Order_number || order.id;
-    document.getElementById('ty-name').textContent = order.Customer_name || '—';
-    document.getElementById('ty-email').textContent = order.Customer_email || '—';
-    document.getElementById('ty-product').textContent = product.Product_name || '—';
-
-    // Set download link
-    const downloadBtn = document.getElementById('download-btn');
-    downloadBtn.href = product.Product_download_link || '#';
-    downloadBtn.style.pointerEvents = product.Product_download_link ? 'auto' : 'none';
-    downloadBtn.style.opacity = product.Product_download_link ? '1' : '0.5';
-
-    // Load resend count
-    loadResendCount(order.id);
-  }
-
-  async function loadResendCount(orderId) {
-    try {
-      const { data, error } = await supabase
-        .from('automation_email')
-        .select('number_of_resend')
-        .eq('order_id', orderId)
-        .eq('email_type', 'product_delivery')
-        .single();
-
-      if (data) {
-        const remaining = MAX_RESENDS - (data.number_of_resend || 0);
-        updateResendUI(remaining, data.number_of_resend || 0);
-      }
-    } catch (err) {
-      console.error('Load resend count error:', err);
-      updateResendUI(MAX_RESENDS, 0);
-    }
-  }
-
-  function updateResendUI(remaining, used) {
-    document.getElementById('resend-remaining').textContent = remaining;
-    document.getElementById('resend-badge').textContent = (MAX_RESENDS - used) + '/' + MAX_RESENDS;
-    
-    const btn = document.getElementById('btn-resend');
-    if (remaining <= 0) {
-      btn.disabled = true;
-      btn.innerHTML = `
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <span>No resends remaining</span>
-      `;
-    }
-  }
-
-  async function resendProductEmail() {
-    if (!currentOrder) return;
-
-    const btn = document.getElementById('btn-resend');
-    btn.disabled = true;
-
-    try {
-      // Increment resend count
-      const { data: existing } = await supabase
-        .from('automation_email')
-        .select('id, number_of_resend')
-        .eq('order_id', currentOrder.id)
-        .eq('email_type', 'product_delivery')
-        .single();
-
-      if (existing) {
-        const newCount = (existing.number_of_resend || 0) + 1;
-        await supabase
-          .from('automation_email')
-          .update({ number_of_resend: newCount, is_sent: true })
-          .eq('id', existing.id);
-
-        const remaining = MAX_RESENDS - newCount;
-        updateResendUI(remaining, newCount);
-      }
-
-      showToast('Product link resent to ' + currentOrder.Customer_email);
-    } catch (err) {
-      console.error('Resend error:', err);
-      showToast('Failed to resend', true);
-      btn.disabled = false;
-    }
-  }
-
-  function downloadInvoice() {
-    if (!currentOrder || !currentProduct) return;
-
-    const invoiceHTML = generateInvoiceHTML(currentOrder, currentProduct);
-    const element = document.getElementById('invoice-template');
-    element.innerHTML = invoiceHTML;
-
-    const opt = {
-      margin: 10,
-      filename: `Invoice-${currentOrder.Order_number || currentOrder.id}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-
-    html2pdf().set(opt).from(element).save();
-  }
-
-  function generateInvoiceHTML(order, product) {
-    const date = new Date(order.created_at).toLocaleDateString('en-IN');
-    const amount = product.Product_price || 0;
-
-    return `
-      <div style="padding: 20px; font-family: Arial, sans-serif;">
-        <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #B8935A; padding-bottom: 20px;">
-          <h1 style="margin: 0; color: #1C1B18; font-size: 28px;">INVOICE</h1>
-          <p style="margin: 5px 0; color: #6B6760;">Creatorstack Digital Products</p>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
-          <div>
-            <h3 style="color: #1C1B18; font-size: 12px; margin: 0 0 10px 0; text-transform: uppercase; letter-spacing: 1px;">Bill To</h3>
-            <p style="margin: 0; color: #1C1B18; font-weight: bold; font-size: 14px;">${order.Customer_name}</p>
-            <p style="margin: 5px 0 0 0; color: #6B6760; font-size: 13px;">${order.Customer_email}</p>
-          </div>
-          <div>
-            <h3 style="color: #1C1B18; font-size: 12px; margin: 0 0 10px 0; text-transform: uppercase; letter-spacing: 1px;">Invoice Details</h3>
-            <p style="margin: 0; color: #1C1B18;"><strong>Order #:</strong> ${order.Order_number || order.id}</p>
-            <p style="margin: 5px 0; color: #1C1B18;"><strong>Date:</strong> ${date}</p>
-            <p style="margin: 5px 0; color: #1C1B18;"><strong>Payment ID:</strong> ${order.Razorpay_payment_id || '—'}</p>
+function generateInvoiceHTML() {
+  const now = new Date().toLocaleDateString('en-IN', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+  
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <title>Invoice - Creatorstack</title>
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; border-bottom: 2px solid #B8935A; padding-bottom: 20px; }
+        .logo { font-size: 28px; font-weight: 600; color: #1C1B18; letter-spacing: -1px; }
+        .invoice-number { text-align: right; }
+        .invoice-number .label { font-size: 12px; color: #999; text-transform: uppercase; }
+        .invoice-number .value { font-size: 18px; font-weight: 600; color: #1C1B18; }
+        .details { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .detail-group { }
+        .detail-group .label { font-size: 12px; color: #999; text-transform: uppercase; margin-bottom: 4px; }
+        .detail-group .value { font-size: 14px; color: #1C1B18; line-height: 1.6; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
+        table th { background: #F4F3EF; padding: 12px; text-align: left; font-weight: 600; font-size: 13px; color: #6B6760; text-transform: uppercase; border-radius: 4px 4px 0 0; }
+        table td { padding: 16px 12px; border-bottom: 1px solid #E6E4DE; }
+        table tr:last-child td { border-bottom: none; }
+        .amount-section { display: flex; justify-content: flex-end; margin-bottom: 40px; }
+        .amount-box { width: 300px; }
+        .amount-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; }
+        .amount-row.total { border-top: 2px solid #B8935A; padding-top: 12px; font-weight: 600; font-size: 18px; color: #1C1B18; }
+        .note { background: #F4F3EF; padding: 16px; border-radius: 4px; font-size: 13px; color: #6B6760; line-height: 1.6; margin-bottom: 20px; }
+        .footer { text-align: center; color: #999; font-size: 12px; border-top: 1px solid #E6E4DE; padding-top: 20px; margin-top: 40px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <div class="logo">Creatorstack</div>
+          <div class="invoice-number">
+            <div class="label">Order Number</div>
+            <div class="value">${document.getElementById('ty-order-num').textContent}</div>
           </div>
         </div>
-
-        <table style="width: 100%; margin-bottom: 30px; border-collapse: collapse;">
-          <thead>
-            <tr style="background: #F4F3EF; border: 1px solid #E6E4DE;">
-              <th style="padding: 12px; text-align: left; color: #1C1B18; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Description</th>
-              <th style="padding: 12px; text-align: right; color: #1C1B18; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; width: 100px;">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="border: 1px solid #E6E4DE;">
-              <td style="padding: 12px; color: #1C1B18; font-size: 13px;">${product.Product_name}</td>
-              <td style="padding: 12px; text-align: right; color: #1C1B18; font-size: 13px;">₹${amount}</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div style="display: flex; justify-content: flex-end; margin-bottom: 30px;">
-          <div style="width: 300px;">
-            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-top: 2px solid #B8935A; border-bottom: 2px solid #B8935A;">
-              <span style="font-weight: 600; color: #1C1B18; font-size: 14px;">Total Amount</span>
-              <span style="font-weight: 600; color: #B8935A; font-size: 18px;">₹${amount}</span>
+        
+        <div class="details">
+          <div class="detail-group">
+            <div class="label">Bill To</div>
+            <div class="value">
+              ${STATE.customerName}<br>
+              ${STATE.customerEmail}
+            </div>
+          </div>
+          <div class="detail-group">
+            <div class="label">Invoice Details</div>
+            <div class="value">
+              Date: ${now}<br>
+              Status: Paid
             </div>
           </div>
         </div>
-
-        <div style="background: #E8F5EF; border: 1px solid rgba(61,138,110,.2); border-radius: 8px; padding: 15px; margin-top: 30px;">
-          <p style="margin: 0; color: #3D8A6E; font-size: 12px;"><strong>✓ Payment Received</strong></p>
-          <p style="margin: 5px 0 0 0; color: #3D8A6E; font-size: 12px;">This is an automatically generated invoice. Your digital product has been delivered to your email.</p>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th style="text-align: right;">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>${STATE.product.Product_name}</td>
+              <td style="text-align: right; font-weight: 600;">₹${formatPrice(STATE.product.Product_price)}</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <div class="amount-section">
+          <div class="amount-box">
+            <div class="amount-row total">
+              <span>Total Amount Paid</span>
+              <span>₹${formatPrice(STATE.product.Product_price)}</span>
+            </div>
+          </div>
         </div>
-
-        <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #E6E4DE; color: #A8A49E; font-size: 11px;">
-          <p style="margin: 0;">Thank you for your purchase! For any queries, please contact support.</p>
-          <p style="margin: 5px 0 0 0;">Generated on ${new Date().toLocaleString('en-IN')}</p>
+        
+        <div class="note">
+          <strong>Thank you for your purchase!</strong> Your digital product has been delivered. You can download it from your confirmation email or the download link provided on the website. If you need any assistance, feel free to reach out to our support team.
+        </div>
+        
+        <div class="footer">
+          <p>This is an automatically generated invoice. Creatorstack • Digital Products Store</p>
         </div>
       </div>
-    `;
-  }
+    </body>
+    </html>
+  `;
+}
 
-  // ══════════════════════════════════════════════════════════════
-  // EMAIL REQUEST CREATION
-  // ══════════════════════════════════════════════════════════════
-  async function createEmailRequest(orderId) {
-    try {
-      await supabase.from('automation_email').insert({
-        order_id: orderId,
-        is_sent: true,
-        email_type: 'product_delivery',
-        number_of_resend: 0
-      });
-    } catch (err) {
-      console.error('Create email request error:', err);
-    }
-  }
+/* ══════════════════════════════════════════════════════════════
+   UI HELPERS
+══════════════════════════════════════════════════════════════ */
+function showProcessing(text, sub) {
+  document.getElementById('processing-text').textContent = text;
+  document.getElementById('processing-sub').textContent = sub;
+  document.getElementById('processing-overlay').classList.add('show');
+}
 
-  // ══════════════════════════════════════════════════════════════
-  // UI HELPERS
-  // ══════════════════════════════════════════════════════════════
-  function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(page => {
-      page.classList.remove('active');
-    });
-    document.getElementById(pageId).classList.add('active');
-  }
+function hideProcessing() {
+  document.getElementById('processing-overlay').classList.remove('show');
+}
 
-  function showProduct() {
-    if (currentProduct) {
-      window.location.href = '/' + currentProduct.id;
-    }
-  }
-
-  function showError(title, message) {
-    document.getElementById('page-loading').style.display = 'none';
-    document.getElementById('page-error').style.display = 'flex';
-    document.getElementById('error-title').textContent = title;
-    document.getElementById('error-msg').textContent = message;
-  }
-
-  function showToast(message, isError = false) {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.classList.add('show');
-    if (isError) toast.classList.add('error');
-    
-    setTimeout(() => {
-      toast.classList.remove('show', 'error');
-    }, 3000);
-  }
-
-  function isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  }
-
-  // ══════════════════════════════════════════════════════════════
-  // START APP
-  // ══════════════════════════════════════════════════════════════
-  window.addEventListener('DOMContentLoaded', initApp);
+let toastTimer;
+function showToast(msg, isError = false) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.toggle('error', isError);
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 4000);
+}
 </script>
 
 </body>
