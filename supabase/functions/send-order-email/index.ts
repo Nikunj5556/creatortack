@@ -203,7 +203,7 @@ Deno.serve(async (req: Request) => {
       body: JSON.stringify({
         sender: {
           name: 'Creatorstack',
-          email: 'hello@creatorstack.breakfastclub.co.in',
+          email: 'hello@breakfastclub.co.in',
         },
         to: [{ email: customerEmail, name: customerName }],
         subject: `Your ${productName} is ready`,
