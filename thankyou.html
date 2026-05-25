@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#FAF9F6" />
+  <title>Order Confirmed — Creatorstack</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & Base ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:          #FAF9F6;
+      --surface:     #FFFFFF;
+      --surface-2:   #F4F3EF;
+      --border:      #E6E4DE;
+      --border-soft: #EEEDE8;
+      --text-1:      #1C1B18;
+      --text-2:      #6B6760;
+      --text-3:      #A8A49E;
+      --gold:        #B8935A;
+      --gold-light:  #D4AB72;
+      --gold-pale:   #F5EBD8;
+      --green:       #3D8A6E;
+      --green-dark:  #2C6E56;
+      --green-pale:  #E8F5EF;
+      --red:         #C0392B;
+      --red-pale:    #FDECEA;
+      --radius:      14px;
+      --radius-sm:   8px;
+      --radius-lg:   20px;
+      --shadow-xs:   0 1px 3px rgba(0,0,0,.06);
+      --shadow-sm:   0 2px 8px rgba(0,0,0,.08);
+      --shadow-md:   0 8px 32px rgba(0,0,0,.10);
+      --shadow-lg:   0 20px 60px rgba(0,0,0,.12);
+      --font-display:'Cormorant Garamond', Georgia, serif;
+      --font-body:   'DM Sans', system-ui, sans-serif;
+      --font-mono:   'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text-1);
+      line-height: 1.6;
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── Brand Bar ──────────────────────────────────────────────── */
+    .brand-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-soft);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.92);
+    }
+    .brand-bar img.logo {
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+    }
+    .brand-bar .brand-name {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 500;
+      letter-spacing: .01em;
+      color: var(--text-1);
+    }
+
+    /* ── Skeleton loader ────────────────────────────────────────── */
+    #page-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100dvh - 73px);
+      gap: 16px;
+    }
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 2px solid var(--border);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text {
+      font-size: .875rem;
+      color: var(--text-3);
+      font-weight: 300;
+      letter-spacing: .04em;
+    }
+
+    /* ── Error state ────────────────────────────────────────────── */
+    #page-error {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100dvh - 73px);
+      padding: 40px 24px;
+      text-align: center;
+      gap: 12px;
+    }
+    .error-icon { font-size: 3rem; opacity: .3; }
+    .error-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--text-1);
+    }
+    .error-sub { font-size: .9rem; color: var(--text-2); max-width: 340px; }
+
+    /* ══════════════════════════════════════════════════════════════
+       THANK YOU PAGE
+    ══════════════════════════════════════════════════════════════ */
+    #page-thankyou {
+      display: none;
+      min-height: calc(100dvh - 73px);
+      padding: 48px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decorative background orbs */
+    #page-thankyou::before {
+      content: '';
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(184,147,90,.07) 0%, transparent 70%);
+      top: -200px;
+      right: -200px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    #page-thankyou::after {
+      content: '';
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(61,138,110,.06) 0%, transparent 70%);
+      bottom: -100px;
+      left: -100px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .ty-layout {
+      position: relative;
+      z-index: 1;
+      max-width: 540px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp .6s cubic-bezier(.4,0,.2,1) .1s forwards;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Success Hero Card ──────────────────────────────────────── */
+    .hero-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero-top {
+      position: relative;
+      padding: 52px 32px 36px;
+      background: linear-gradient(160deg, #F0FDF8 0%, #FAFFF8 40%, #FAF9F6 100%);
+      border-bottom: 1px solid var(--border-soft);
+      overflow: hidden;
+    }
+
+    /* Subtle grid pattern */
+    .hero-top::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(61,138,110,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61,138,110,.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+
+    .check-wrap {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+    }
+
+    /* Pulsing rings */
+    .check-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(61,138,110,.25);
+      animation: ring-pulse 2.4s ease-out infinite;
+    }
+    .check-ring:nth-child(2) { animation-delay: .8s; }
+    @keyframes ring-pulse {
+      0%   { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.7); opacity: 0; }
+    }
+
+    .check-circle {
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4CAF8E, var(--green));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(61,138,110,.3);
+      animation: pop-in .5s cubic-bezier(.34,1.56,.64,1) .2s both;
+    }
+    @keyframes pop-in {
+      from { transform: scale(.5); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .check-circle svg {
+      width: 28px;
+      height: 28px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      animation: draw-check .4s ease .7s both;
+    }
+    @keyframes draw-check {
+      from { stroke-dasharray: 40; stroke-dashoffset: 40; }
+      to   { stroke-dasharray: 40; stroke-dashoffset: 0; }
+    }
+
+    .paid-badge {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-pale);
+      color: var(--green-dark);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(61,138,110,.2);
+      margin-bottom: 14px;
+    }
+    .paid-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: blink 1.6s ease infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .3; }
+    }
+
+    .hero-title {
+      position: relative;
+      font-family: var(--font-display);
+      font-size: 2.6rem;
+      font-weight: 400;
+      color: var(--text-1);
+      line-height: 1.1;
+      margin-bottom: 10px;
+      letter-spacing: -.01em;
+    }
+
+    .hero-sub {
+      position: relative;
+      font-size: .9rem;
+      color: var(--text-2);
+      font-weight: 300;
+      line-height: 1.65;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    /* ── Order Details Card ─────────────────────────────────────── */
+    .detail-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-xs);
+      overflow: hidden;
+      animation: fadeUp .6s cubic-bezier(.4,0,.2,1) .25s both;
+    }
+
+    .detail-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-soft);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .detail-header-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--gold-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .detail-header-icon svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 2;
+    }
+    .detail-header-title {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--text-2);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .detail-rows { padding: 8px 0; }
+
+    .detail-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 24px;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-soft);
+      transition: background .15s ease;
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-row:hover { background: var(--surface-2); }
+
+    .detail-key {
+      font-size: .8rem;
+      color: var(--text-3);
+      font-weight: 400;
+      flex-shrink: 0;
+    }
+    .detail-val {
+      font-size: .875rem;
+      color: var(--text-1);
+      font-weight: 500;
+      text-align: right;
+      word-break: break-all;
+    }
+    .detail-val.mono { font-family: var(--font-mono); font-size: .8rem; }
+    .detail-val.amount {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--green-dark);
+      font-weight: 500;
+    }
+
+    /* ── Email Section Card ─────────────────────────────────────── */
+    .email-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-xs);
+      overflow: hidden;
+      animation: fadeUp .6s cubic-bezier(.4,0,.2,1) .35s both;
+    }
+
+    .email-card-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-soft);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .email-card-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: rgba(61,138,110,.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .email-card-icon svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--green);
+      fill: none;
+      stroke-width: 2;
+    }
+    .email-card-title {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--text-2);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .email-card-body { padding: 20px 24px; }
+
+    .email-notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--green-pale);
+      border: 1px solid rgba(61,138,110,.2);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .email-notice-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      margin-top: 5px;
+      animation: blink 2s ease infinite;
+    }
+    .email-notice-text {
+      font-size: .84rem;
+      color: var(--green-dark);
+      line-height: 1.55;
+    }
+    .email-notice-text strong { font-weight: 600; }
+
+    /* Resend area */
+    .resend-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .resend-meta {
+      flex: 1;
+      min-width: 0;
+    }
+    .resend-label {
+      font-size: .8rem;
+      color: var(--text-2);
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+    .resend-pips {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    .pip {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background .3s ease;
+    }
+    .pip.used { background: var(--green); }
+    .pip.available { background: var(--border-soft); border: 1.5px solid var(--border); }
+
+    .btn-resend {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      font-family: var(--font-body);
+      font-size: .84rem;
+      font-weight: 500;
+      color: var(--text-1);
+      cursor: pointer;
+      transition: all .2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-resend:hover:not(:disabled) {
+      border-color: var(--green);
+      color: var(--green-dark);
+      background: var(--green-pale);
+    }
+    .btn-resend:disabled { opacity: .45; cursor: not-allowed; }
+    .btn-resend svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .btn-resend.loading svg { animation: spin .7s linear infinite; }
+
+    .resend-limit-msg {
+      font-size: .78rem;
+      color: var(--text-3);
+      text-align: center;
+      padding: 10px 0 0;
+      display: none;
+    }
+    .resend-limit-msg.show { display: block; }
+
+    /* ── Actions Card ───────────────────────────────────────────── */
+    .actions-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-xs);
+      overflow: hidden;
+      animation: fadeUp .6s cubic-bezier(.4,0,.2,1) .45s both;
+    }
+
+    .actions-card-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-soft);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .actions-card-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--gold-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .actions-card-icon svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 2;
+    }
+    .actions-card-title {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--text-2);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .actions-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 12px; }
+
+    /* Download button */
+    .btn-download {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, #5BAF8E, var(--green));
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: .95rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .25s ease;
+      letter-spacing: .01em;
+      box-shadow: 0 4px 16px rgba(61,138,110,.2);
+    }
+    .btn-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(61,138,110,.3);
+      filter: brightness(1.06);
+    }
+    .btn-download:active { transform: translateY(0); }
+    .btn-download svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    /* Invoice button */
+    .btn-invoice {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px 24px;
+      background: var(--surface);
+      color: var(--text-1);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: .9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .25s ease;
+      letter-spacing: .01em;
+    }
+    .btn-invoice:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: var(--gold-pale);
+      transform: translateY(-1px);
+    }
+    .btn-invoice:active { transform: translateY(0); }
+    .btn-invoice svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    /* ── Toast ─────────────────────────────────────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      background: var(--text-1);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: .875rem;
+      z-index: 9999;
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      white-space: nowrap;
+      box-shadow: var(--shadow-lg);
+      pointer-events: none;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+    #toast.success { background: var(--green); }
+    #toast.error   { background: var(--red); }
+
+    /* ══════════════════════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════════════════════ */
+    @media (max-width: 600px) {
+      .brand-bar { padding: 16px 20px; }
+      .brand-bar .brand-name { font-size: 1.15rem; }
+      .brand-bar img.logo { height: 26px; }
+
+      #page-thankyou { padding: 24px 16px 60px; }
+      .hero-top { padding: 40px 20px 28px; }
+      .hero-title { font-size: 2.1rem; }
+      .hero-sub { font-size: .85rem; }
+
+      .detail-row { padding: 12px 20px; }
+      .detail-header { padding: 14px 20px; }
+      .email-card-body { padding: 16px 20px; }
+      .actions-body { padding: 16px 20px; }
+      .actions-card-header, .email-card-header { padding: 14px 20px; }
+
+      .resend-row { flex-direction: column; align-items: flex-start; }
+      .btn-resend { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Brand Bar ──────────────────────────────────────────────── -->
+<header class="brand-bar">
+  <img
+    class="logo"
+    src="https://hostimage.com/creatorstack.png"
+    alt="Creatorstack"
+    onerror="this.style.display='none'"
+  />
+  <span class="brand-name" style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.35rem;font-weight:500;">Creatorstack</span>
+</header>
+
+<!-- ── Loading ───────────────────────────────────────────────── -->
+<div id="page-loading">
+  <div class="spinner"></div>
+  <p class="loading-text">Confirming your order…</p>
+</div>
+
+<!-- ── Error ─────────────────────────────────────────────────── -->
+<div id="page-error">
+  <div class="error-icon">✦</div>
+  <h1 class="error-title" id="error-title" style="font-family:'Cormorant Garamond',Georgia,serif;">Order Not Found</h1>
+  <p class="error-sub" id="error-msg">We couldn't locate this order. Please check your email for confirmation or contact support.</p>
+</div>
+
+<!-- ── Thank You Page ─────────────────────────────────────────── -->
+<div id="page-thankyou">
+  <div class="ty-layout">
+
+    <!-- Hero: Success confirmation -->
+    <div class="hero-card">
+      <div class="hero-top">
+        <div class="check-wrap">
+          <div class="check-ring"></div>
+          <div class="check-ring"></div>
+          <div class="check-circle">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="paid-badge">Payment Completed</div>
+        <h1 class="hero-title">Thank You!</h1>
+        <p class="hero-sub">Your purchase is confirmed and your digital product is ready to download below.</p>
+      </div>
+    </div>
+
+    <!-- Order Details -->
+    <div class="detail-card">
+      <div class="detail-header">
+        <div class="detail-header-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <span class="detail-header-title">Order Summary</span>
+      </div>
+      <div class="detail-rows">
+        <div class="detail-row">
+          <span class="detail-key">Order Number</span>
+          <span class="detail-val mono" id="ty-order-num">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Customer</span>
+          <span class="detail-val" id="ty-name">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Email</span>
+          <span class="detail-val" id="ty-email" style="font-size:.8rem;">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Product</span>
+          <span class="detail-val" id="ty-product">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Amount Paid</span>
+          <span class="detail-val amount" id="ty-amount">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Date</span>
+          <span class="detail-val" id="ty-date">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Email Delivery -->
+    <div class="email-card">
+      <div class="email-card-header">
+        <div class="email-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <span class="email-card-title">Email Delivery</span>
+      </div>
+      <div class="email-card-body">
+        <div class="email-notice">
+          <div class="email-notice-dot"></div>
+          <p class="email-notice-text">
+            <strong>Confirmation queued.</strong> Your order confirmation and download link have been scheduled for delivery to <strong id="email-target">your email</strong>.
+          </p>
+        </div>
+        <div class="resend-row">
+          <div class="resend-meta">
+            <p class="resend-label">Delivery attempts</p>
+            <div class="resend-pips" id="resend-pips">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+          <button class="btn-resend" id="btn-resend" onclick="requestResend()">
+            <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.07"/></svg>
+            Resend Email
+          </button>
+        </div>
+        <p class="resend-limit-msg" id="resend-limit-msg">
+          Maximum of 5 delivery requests reached. Please check your spam folder or contact support.
+        </p>
+      </div>
+    </div>
+
+    <!-- Download Actions -->
+    <div class="actions-card">
+      <div class="actions-card-header">
+        <div class="actions-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+        <span class="actions-card-title">Your Files</span>
+      </div>
+      <div class="actions-body">
+        <a id="btn-download" class="btn-download" href="#" target="_blank" rel="noopener noreferrer" style="display:none;">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Your Product
+        </a>
+        <button class="btn-invoice" onclick="downloadInvoice()">
+          <svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+          Download Invoice
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- ── Script ─────────────────────────────────────────────────── -->
+<script>
+/* ══════════════════════════════════════════════════════════════
+   CONSTANTS
+══════════════════════════════════════════════════════════════ */
+const MAX_RESENDS = 5;
+
+/* ══════════════════════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════════════════════ */
+const S = {
+  orderId:     null,
+  order:       null,   // full order object from /api/order
+  resendCount: 0,
+};
+
+/* ══════════════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════════════ */
+(async function init() {
+  // Parse order ID from URL: /thankyou/{orderId}
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  const rawId = parts[parts.length - 1];
+  const orderId = parseInt(rawId, 10);
+
+  if (!rawId || isNaN(orderId) || orderId <= 0) {
+    return showError('Invalid Link', 'This thank-you URL is invalid. Please check your confirmation email.');
+  }
+  S.orderId = orderId;
+
+  try {
+    const res = await fetch('/api/order?id=' + orderId);
+    const data = await res.json();
+
+    if (!res.ok) {
+      return showError('Order Not Found', data.error || 'We could not find this order. Please contact support.');
+    }
+
+    S.order = data;
+    S.resendCount = data.email?.resendCount ?? 0;
+
+    renderPage(data);
+    showPage();
+  } catch (err) {
+    console.error(err);
+    showError('Something went wrong', 'Please refresh and try again, or contact support.');
+  }
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   RENDER
+══════════════════════════════════════════════════════════════ */
+function renderPage(order) {
+  document.title = 'Order Confirmed — Creatorstack';
+
+  // Order rows
+  setText('ty-order-num', order.orderNumber || ('ORD-' + order.id));
+  setText('ty-name',      order.customerName || '—');
+  setText('ty-email',     order.customerEmail || '—');
+  setText('ty-product',   order.product?.name || 'Digital Product');
+  setText('ty-amount',    order.product?.price
+    ? '₹' + Number(order.product.price).toLocaleString('en-IN')
+    : '—');
+  setText('ty-date',      order.createdAt
+    ? new Date(order.createdAt).toLocaleDateString('en-IN', {
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: '2-digit', minute: '2-digit',
+      })
+    : '—');
+
+  // Email section
+  setText('email-target', order.customerEmail || 'your email');
+  renderResendPips(S.resendCount);
+
+  // Download button
+  const dlBtn = document.getElementById('btn-download');
+  const dlLink = order.product?.downloadLink;
+  if (dlLink) {
+    dlBtn.href = dlLink;
+    dlBtn.style.display = 'flex';
+  } else {
+    dlBtn.style.display = 'none';
+  }
+}
+
+function renderResendPips(count) {
+  const pips = document.getElementById('resend-pips');
+  pips.innerHTML = '';
+  for (let i = 0; i < MAX_RESENDS; i++) {
+    const pip = document.createElement('div');
+    pip.className = 'pip ' + (i < count ? 'used' : 'available');
+    pip.title = i < count ? 'Sent' : 'Available';
+    pips.appendChild(pip);
+  }
+
+  const btn = document.getElementById('btn-resend');
+  const limitMsg = document.getElementById('resend-limit-msg');
+
+  if (count >= MAX_RESENDS) {
+    btn.disabled = true;
+    limitMsg.classList.add('show');
+  } else {
+    btn.disabled = false;
+    limitMsg.classList.remove('show');
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESEND EMAIL
+══════════════════════════════════════════════════════════════ */
+async function requestResend() {
+  if (S.resendCount >= MAX_RESENDS) return;
+
+  const btn = document.getElementById('btn-resend');
+  btn.disabled = true;
+  btn.classList.add('loading');
+  btn.innerHTML = `
+    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
+      <path d="M21 2v6h-6M3 12a9 9 0 0115-6.7L21 8M3 22v-6h6M21 12a9 9 0 01-15 6.7L3 16"/>
+    </svg>
+    Sending…`;
+
+  try {
+    const res = await fetch('/api/resend-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderId: S.orderId }),
+    });
+
+    const data = await res.json();
+
+    if (res.status === 429) {
+      showToast('Maximum resend limit reached', 'error');
+      S.resendCount = MAX_RESENDS;
+    } else if (!res.ok) {
+      throw new Error(data.error || 'Request failed');
+    } else {
+      S.resendCount = data.resendCount ?? (S.resendCount + 1);
+      showToast('Resend request queued successfully', 'success');
+    }
+
+    renderResendPips(S.resendCount);
+  } catch (err) {
+    console.error('resend error:', err);
+    showToast(err.message || 'Failed to queue resend', 'error');
+    btn.disabled = false;
+  } finally {
+    btn.classList.remove('loading');
+    btn.innerHTML = `
+      <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2">
+        <polyline points="1 4 1 10 7 10"/>
+        <path d="M3.51 15a9 9 0 1 0 .49-4.07"/>
+      </svg>
+      Resend Email`;
+    // Re-evaluate disabled state after renderResendPips
+    if (S.resendCount >= MAX_RESENDS) {
+      btn.disabled = true;
+    }
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   INVOICE GENERATION
+══════════════════════════════════════════════════════════════ */
+function downloadInvoice() {
+  const order = S.order;
+  if (!order) { showToast('Order data not loaded', 'error'); return; }
+
+  const dateStr = order.createdAt
+    ? new Date(order.createdAt).toLocaleDateString('en-IN', {
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: '2-digit', minute: '2-digit',
+      })
+    : new Date().toLocaleDateString('en-IN', {
+        year: 'numeric', month: 'long', day: 'numeric',
+      });
+
+  const orderNum = order.orderNumber || ('ORD-' + order.id);
+  const productName = order.product?.name || 'Digital Product';
+  const price = order.product?.price;
+  const priceFormatted = price ? '₹' + Number(price).toLocaleString('en-IN') : '—';
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Invoice ${orderNum} — Creatorstack</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#F5F4F0;padding:24px;color:#1C1B18;line-height:1.5}
+  .page{max-width:720px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08)}
+  .top{background:linear-gradient(135deg,#1C1B18 0%,#2D2C28 100%);padding:36px 40px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+  .logo{font-size:22px;font-weight:600;color:#fff;letter-spacing:-.5px}
+  .logo span{color:#B8935A}
+  .invoice-meta{text-align:right}
+  .invoice-meta .label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:3px}
+  .invoice-meta .num{font-size:15px;font-weight:600;color:#fff;font-family:'Courier New',monospace}
+  .status-bar{background:#B8935A;padding:8px 40px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#fff;display:flex;align-items:center;gap:8px}
+  .status-bar::before{content:'';width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block}
+  .body{padding:36px 40px}
+  .parties{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:36px}
+  .party .label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#A8A49E;font-weight:600;margin-bottom:8px}
+  .party .name{font-size:15px;font-weight:600;color:#1C1B18;margin-bottom:2px}
+  .party .sub{font-size:13px;color:#6B6760}
+  .divider{height:1px;background:#EEEDE8;margin-bottom:28px}
+  table{width:100%;border-collapse:collapse;margin-bottom:28px}
+  thead tr{background:#F4F3EF}
+  thead th{padding:10px 14px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#A8A49E;font-weight:600}
+  thead th:last-child{text-align:right}
+  tbody td{padding:16px 14px;font-size:14px;border-bottom:1px solid #EEEDE8}
+  tbody td:last-child{text-align:right;font-weight:600}
+  .total-block{display:flex;justify-content:flex-end}
+  .total-box{width:260px;border:1px solid #EEEDE8;border-radius:8px;overflow:hidden}
+  .total-row{display:flex;justify-content:space-between;padding:10px 16px;font-size:13px;border-bottom:1px solid #EEEDE8;color:#6B6760}
+  .total-row:last-child{background:#1C1B18;border-bottom:none;color:#fff;font-weight:600;font-size:15px;padding:14px 16px}
+  .footer{padding:20px 40px;background:#F4F3EF;border-top:1px solid #EEEDE8;font-size:11px;color:#A8A49E;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .note{background:#F0FDF8;border:1px solid rgba(61,138,110,.15);border-radius:8px;padding:16px;margin:28px 0 0;font-size:13px;color:#3D8A6E;line-height:1.6}
+  .note strong{font-weight:600}
+  @media print{body{background:#fff;padding:0}.page{box-shadow:none;border-radius:0}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top">
+    <div class="logo">Creator<span>stack</span></div>
+    <div class="invoice-meta">
+      <div class="label">Invoice</div>
+      <div class="num">${orderNum}</div>
+    </div>
+  </div>
+  <div class="status-bar">Payment Confirmed</div>
+  <div class="body">
+    <div class="parties">
+      <div class="party">
+        <div class="label">Bill To</div>
+        <div class="name">${escapeHtml(order.customerName || '—')}</div>
+        <div class="sub">${escapeHtml(order.customerEmail || '—')}</div>
+      </div>
+      <div class="party">
+        <div class="label">Invoice Details</div>
+        <div class="name">Date: ${dateStr}</div>
+        <div class="sub">Status: Paid &nbsp;·&nbsp; Digital Delivery</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <table>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Type</th>
+          <th>Qty</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>${escapeHtml(productName)}</td>
+          <td style="color:#A8A49E">Digital Product</td>
+          <td style="color:#A8A49E">1</td>
+          <td>${priceFormatted}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="total-block">
+      <div class="total-box">
+        <div class="total-row"><span>Subtotal</span><span>${priceFormatted}</span></div>
+        <div class="total-row"><span>Tax</span><span>Included</span></div>
+        <div class="total-row"><span>Total Paid</span><span>${priceFormatted}</span></div>
+      </div>
+    </div>
+    <div class="note">
+      <strong>Thank you for your purchase!</strong> This is a digital product — no physical shipment. Your download link is available on your confirmation page. If you need assistance, please reach out to our support team with order number <strong>${orderNum}</strong>.
+    </div>
+  </div>
+  <div class="footer">
+    <span>Creatorstack &middot; Digital Products Store</span>
+    <span>Generated: ${new Date().toLocaleDateString('en-IN')}</span>
+  </div>
+</div>
+</body>
+</html>`;
+
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `invoice-${orderNum}.html`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('Invoice downloaded', 'success');
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PAGE MANAGEMENT
+══════════════════════════════════════════════════════════════ */
+function showPage() {
+  document.getElementById('page-loading').style.display = 'none';
+  document.getElementById('page-error').style.display   = 'none';
+  document.getElementById('page-thankyou').style.display = 'block';
+}
+
+function showError(title, msg) {
+  document.getElementById('page-loading').style.display = 'none';
+  document.getElementById('page-thankyou').style.display = 'none';
+  document.getElementById('error-title').textContent = title;
+  document.getElementById('error-msg').textContent   = msg;
+  document.getElementById('page-error').style.display = 'flex';
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HELPERS
+══════════════════════════════════════════════════════════════ */
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+let toastTimer;
+function showToast(msg, type = '') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = type ? `show ${type}` : 'show';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.className = el.className.replace('show', '').trim(); }, 4000);
+}
+</script>
+
+</body>
+</html>
