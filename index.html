@@ -655,6 +655,228 @@
       .product-info { padding: 36px 36px 36px 32px; }
       .product-name { font-size: 2.2rem; }
     }
+
+    /* ============================================================
+       FOOTER STYLES
+       ============================================================ */
+    footer {
+      background: var(--ink, #0E0E0E);
+      color: rgba(255,255,255,0.6);
+      padding: 80px 0 0;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 60px;
+      padding: 0 0 64px;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .nav-logo-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #C8A96E, #0E0E0E);
+      border-radius: 10px;
+    }
+    .footer-brand-desc {
+      font-size: 0.875rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+      max-width: 280px;
+    }
+    .footer-social-row {
+      display: flex;
+      gap: 12px;
+    }
+    .social-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.5);
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+    .social-icon:hover {
+      background: #C8A96E;
+      color: #fff;
+      transform: translateY(-3px);
+    }
+    .footer-col-title {
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 20px;
+    }
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      list-style: none;
+    }
+    .footer-links li a {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.55);
+      transition: color 0.2s;
+    }
+    .footer-links li a:hover {
+      color: #C8A96E;
+    }
+    .footer-contact-item {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    .footer-contact-item a {
+      color: #C8A96E;
+      transition: opacity 0.2s;
+    }
+    .footer-contact-item a:hover {
+      opacity: 0.7;
+    }
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin: 0;
+    }
+    .footer-bottom {
+      padding: 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.3);
+    }
+    .footer-policy-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-policy-links button {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+      transition: color 0.2s;
+      cursor: pointer;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      border: none;
+      background: none;
+    }
+    .footer-policy-links button:hover {
+      color: #C8A96E;
+    }
+
+    /* ============================================================
+       MODAL STYLES
+       ============================================================ */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(14,14,14,0.75);
+      backdrop-filter: blur(12px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+    .modal-box {
+      background: #FAF8F5;
+      border-radius: 24px;
+      max-width: 760px;
+      width: 100%;
+      max-height: 85vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.3);
+    }
+    .modal-header {
+      padding: 32px 40px 24px;
+      border-bottom: 1px solid rgba(14,14,14,0.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #0E0E0E;
+    }
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(14,14,14,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background 0.2s;
+      border: none;
+    }
+    .modal-close:hover {
+      background: #0E0E0E;
+      color: #fff;
+    }
+    .modal-body {
+      padding: 32px 40px;
+      overflow-y: auto;
+    }
+    .modal-body h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #0E0E0E;
+      margin: 24px 0 10px;
+    }
+    .modal-body h3:first-child {
+      margin-top: 0;
+    }
+    .modal-body p, .modal-body li {
+      font-size: 0.9rem;
+      color: #5A5A5A;
+      line-height: 1.75;
+      margin-bottom: 10px;
+    }
+    .modal-body ul {
+      padding-left: 20px;
+    }
+    .modal-body ul li {
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 1024px) {
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      .footer-top { grid-template-columns: 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
@@ -1209,7 +1431,318 @@ function showToast(msg, isError = false) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => el.classList.remove('show'), 4000);
 }
+
+/* ── MODAL SYSTEM ──────────────────────────────────────────── */
+function openModal(id) {
+  document.getElementById('modal-' + id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById('modal-' + id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) {
+      this.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+});
+// Close on ESC
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => {
+      m.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  }
+});
 </script>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <!-- Brand Column -->
+      <div class="footer-brand-col">
+        <div class="footer-logo">
+          <div class="nav-logo-icon" style="width:32px;height:32px;">
+            <svg viewBox="0 0 20 20" style="width:18px;height:18px;fill:#fff;"><path d="M10 2L2 7l8 5 8-5-8-5zM2 13l8 5 8-5M2 10l8 5 8-5"/></svg>
+          </div>
+          Creatorstack
+        </div>
+        <p class="footer-brand-desc">
+          The premium freelancer operating system. Complete toolkit and battle-tested blueprints for high-earning freelancers and digital professionals who refuse to compete on price.
+        </p>
+        <!-- Replace social URLs with actual links -->
+        <div class="footer-social-row">
+          <a href="[INSTAGRAM_URL]" class="social-icon" title="Instagram">📸</a>
+          <a href="[TWITTER_URL]"   class="social-icon" title="Twitter / X">🐦</a>
+          <a href="[LINKEDIN_URL]"  class="social-icon" title="LinkedIn">💼</a>
+          <a href="[YOUTUBE_URL]"   class="social-icon" title="YouTube">▶️</a>
+        </div>
+      </div>
+
+      <!-- Products Column -->
+      <div>
+        <div class="footer-col-title">Products</div>
+        <ul class="footer-links">
+          <li><a href="#clients-product">High-Paying Clients System</a></li>
+          <li><a href="#shift">All Features</a></li>
+        </ul>
+      </div>
+
+      <!-- Company Column -->
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="#why">About Creatorstack</a></li>
+          <li><a href="#testimonials">Freelancer Stories</a></li>
+          <li><a href="#problem">Our Manifesto</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Column -->
+      <div>
+        <div class="footer-col-title">Contact & Legal</div>
+        <!-- Replace placeholders with actual info -->
+        <div class="footer-contact-item">📧 <a href="mailto:[SUPPORT_EMAIL]">[SUPPORT_EMAIL]</a></div>
+        <div class="footer-contact-item" style="font-size:0.8rem;line-height:1.5;">[BUSINESS_ADDRESS]</div>
+        <ul class="footer-links" style="margin-top:16px;">
+          <li><a href="#" onclick="openModal('terms')">Terms of Service</a></li>
+          <li><a href="#" onclick="openModal('privacy')">Privacy Policy</a></li>
+          <li><a href="#" onclick="openModal('refund')">Refund Policy</a></li>
+          <li><a href="#" onclick="openModal('disclaimer')">Disclaimer</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="footer-divider"/>
+
+    <div class="footer-bottom container">
+      <p class="footer-copy">© 2026 Creatorstack. All rights reserved. The premium operating system for high-earning freelancers.</p>
+      <div class="footer-policy-links">
+        <button onclick="openModal('terms')">Terms</button>
+        <button onclick="openModal('privacy')">Privacy</button>
+        <button onclick="openModal('refund')">Refunds</button>
+        <button onclick="openModal('disclaimer')">Disclaimer</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     MODAL: TERMS OF SERVICE
+     ============================================================ -->
+<div class="modal-overlay" id="modal-terms">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Terms of Service</h2>
+      <div class="modal-close" onclick="closeModal('terms')">✕</div>
+    </div>
+    <div class="modal-body">
+      <p><strong>Last Updated:</strong> January 1, 2026 &nbsp;|&nbsp; <strong>Effective Date:</strong> January 1, 2026</p>
+
+      <h3>1. Acceptance of Terms</h3>
+      <p>By accessing or using the Creatorstack website ("Site") or purchasing any products offered by Creatorstack ("Company," "we," "our," or "us"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you may not access or use our Site or purchase our products. Please read these Terms carefully before making any purchase.</p>
+
+      <h3>2. Products and Services</h3>
+      <p>Creatorstack offers digital products including but not limited to guides, systems, and frameworks for freelancers. All products are delivered digitally upon successful payment. No physical products are shipped. Product descriptions are provided in good faith; however, results may vary based on individual effort, market conditions, and implementation.</p>
+
+      <h3>3. Purchases and Payment</h3>
+      <p>All purchases are processed through Razorpay, a third-party payment processor. By making a purchase, you agree to Razorpay's terms and privacy policy. Prices are listed in Indian Rupees (INR) unless otherwise stated. All sales are final in accordance with our Refund Policy. Creatorstack reserves the right to change pricing at any time without prior notice.</p>
+
+      <h3>4. Intellectual Property</h3>
+      <p>All content, materials, templates, guides, and products sold by Creatorstack are the exclusive intellectual property of Creatorstack. You are granted a non-exclusive, non-transferable, personal license to use the products for your own personal or business use only. You may not:</p>
+      <ul>
+        <li>Resell, redistribute, or share any product with third parties without written permission.</li>
+        <li>Claim authorship or ownership of any Creatorstack product.</li>
+        <li>Use Creatorstack products to create competing products or services.</li>
+        <li>Upload or share Creatorstack products on any public or private platform.</li>
+      </ul>
+
+      <h3>5. No Earnings Guarantee</h3>
+      <p>Creatorstack products are educational and informational in nature. We make no guarantees, representations, or warranties — express or implied — regarding earnings, results, income, or success. Individual results will vary. Success depends on factors including but not limited to individual effort, background, market conditions, and timing. Any testimonials or case studies represent individual experiences and are not typical.</p>
+
+      <h3>6. Limitation of Liability</h3>
+      <p>To the fullest extent permitted by applicable law, Creatorstack and its owners, employees, partners, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including lost profits, lost revenue, or business interruption, arising from your use of our products or services.</p>
+
+      <h3>7. Prohibited Uses</h3>
+      <p>You agree not to use Creatorstack products or services for any unlawful purpose, to violate the rights of any third party, to engage in fraudulent activity, or to attempt to gain unauthorized access to any part of our systems.</p>
+
+      <h3>8. Modifications to Terms</h3>
+      <p>We reserve the right to modify these Terms at any time. Changes will be posted on this page with an updated effective date. Your continued use of our products or Site after any changes constitutes acceptance of the new Terms.</p>
+
+      <h3>9. Governing Law</h3>
+      <p>These Terms shall be governed by and construed in accordance with the laws of India. Any disputes arising from these Terms or your use of our products shall be subject to the exclusive jurisdiction of the courts of India.</p>
+
+      <h3>10. Contact</h3>
+      <p>For questions regarding these Terms, please contact us at: <strong>[SUPPORT_EMAIL]</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     MODAL: PRIVACY POLICY
+     ============================================================ -->
+<div class="modal-overlay" id="modal-privacy">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Privacy Policy</h2>
+      <div class="modal-close" onclick="closeModal('privacy')">✕</div>
+    </div>
+    <div class="modal-body">
+      <p><strong>Last Updated:</strong> January 1, 2026 &nbsp;|&nbsp; <strong>Effective Date:</strong> January 1, 2026</p>
+      <p>At Creatorstack, your privacy is important to us. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or make a purchase.</p>
+
+      <h3>1. Information We Collect</h3>
+      <p>We may collect the following types of information:</p>
+      <ul>
+        <li><strong>Personal Information:</strong> Name, email address, phone number, and billing details collected during checkout.</li>
+        <li><strong>Usage Data:</strong> IP address, browser type, pages visited, time spent on pages, and referring URLs collected automatically through cookies and analytics tools.</li>
+        <li><strong>Transaction Data:</strong> Purchase history and payment confirmation (payment card details are processed directly by Razorpay and never stored by us).</li>
+      </ul>
+
+      <h3>2. How We Use Your Information</h3>
+      <ul>
+        <li>To process and fulfill your orders and deliver digital products.</li>
+        <li>To send transactional emails, order confirmations, and product delivery notifications.</li>
+        <li>To send marketing communications (you can opt out at any time).</li>
+        <li>To improve our website, products, and customer experience.</li>
+        <li>To comply with legal obligations.</li>
+      </ul>
+
+      <h3>3. Third-Party Services</h3>
+      <p>We use trusted third-party services to operate our business, including:</p>
+      <ul>
+        <li><strong>Razorpay</strong> — for secure payment processing.</li>
+        <li><strong>Google Analytics</strong> — for website analytics.</li>
+        <li><strong>Email service providers</strong> — for transactional and marketing emails.</li>
+      </ul>
+      <p>These third parties have their own privacy policies and we are not responsible for their practices.</p>
+
+      <h3>4. Cookies</h3>
+      <p>Our website uses cookies to enhance your browsing experience, analyze traffic, and personalize content. You can control cookie preferences through your browser settings. Disabling cookies may affect site functionality.</p>
+
+      <h3>5. Data Security</h3>
+      <p>We implement commercially reasonable security measures to protect your personal information. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.</p>
+
+      <h3>6. Data Retention</h3>
+      <p>We retain your personal data for as long as necessary to fulfill the purposes outlined in this policy, comply with legal obligations, resolve disputes, and enforce our agreements.</p>
+
+      <h3>7. Your Rights</h3>
+      <p>You have the right to access, correct, update, or request deletion of your personal information. To exercise these rights, please contact us at <strong>[SUPPORT_EMAIL]</strong>.</p>
+
+      <h3>8. Children's Privacy</h3>
+      <p>Our products and services are not intended for individuals under the age of 18. We do not knowingly collect personal information from minors.</p>
+
+      <h3>9. Changes to This Policy</h3>
+      <p>We may update this Privacy Policy periodically. The updated version will be indicated by a revised "Last Updated" date. Your continued use of our website after changes constitutes acceptance of the updated policy.</p>
+
+      <h3>10. Contact Us</h3>
+      <p>For privacy-related questions or concerns: <strong>[SUPPORT_EMAIL]</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     MODAL: REFUND & RETURN POLICY
+     ============================================================ -->
+<div class="modal-overlay" id="modal-refund">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Refund &amp; Return Policy</h2>
+      <div class="modal-close" onclick="closeModal('refund')">✕</div>
+    </div>
+    <div class="modal-body">
+      <p><strong>Last Updated:</strong> January 1, 2026 &nbsp;|&nbsp; <strong>Effective Date:</strong> January 1, 2026</p>
+      <p>Please read this Refund Policy carefully before making any purchase from Creatorstack. By completing a purchase, you acknowledge that you have read and understood this policy.</p>
+
+      <h3>1. Digital Products — General Policy</h3>
+      <p>All products sold by Creatorstack are <strong>digital products</strong> delivered electronically upon purchase completion. Due to the nature of digital goods — which are immediately accessible and cannot be "returned" once delivered — <strong>all sales are generally final.</strong></p>
+
+      <h3>2. Situations Where Refunds Are NOT Provided</h3>
+      <p>Creatorstack does not issue refunds under any of the following circumstances:</p>
+      <ul>
+        <li>Change of mind after purchase.</li>
+        <li>Finding a cheaper or alternative product elsewhere.</li>
+        <li>Lack of usage or failure to implement the product.</li>
+        <li>Misunderstanding of the product scope or content (product descriptions are available before purchase).</li>
+        <li>Accidental purchases (please review your order carefully before confirming payment).</li>
+        <li>Dissatisfaction with results where no technical issue exists.</li>
+        <li>Failure to read the product description, sales page, or terms prior to purchase.</li>
+        <li>Refund requests submitted more than <strong>7 calendar days</strong> after the date of purchase.</li>
+        <li>Claiming the content "didn't work" without documented evidence of attempted implementation.</li>
+      </ul>
+
+      <h3>3. Eligible Refund Situations</h3>
+      <p>Refunds are considered exclusively in the following limited circumstances:</p>
+      <ul>
+        <li><strong>Non-delivery:</strong> You did not receive your digital product or download link within 24 hours of purchase, and the issue was not caused by an incorrect email address provided at checkout.</li>
+        <li><strong>Corrupted or unusable files:</strong> The delivered files are technically corrupted and cannot be opened or used after following provided instructions.</li>
+        <li><strong>Non-functioning access:</strong> Download links or access keys provided are completely non-functional and the issue cannot be resolved by our support team.</li>
+      </ul>
+
+      <h3>4. How to Request a Refund</h3>
+      <p>If you believe you qualify for a refund under Section 3 above, please:</p>
+      <ul>
+        <li>Contact us at <strong>[SUPPORT_EMAIL]</strong> within 7 calendar days of your purchase date.</li>
+        <li>Include your full name, email address used for purchase, order confirmation number, and a clear description of the technical issue.</li>
+        <li>Provide screenshots or documentation of the issue as proof.</li>
+      </ul>
+      <p>Creatorstack reserves the right to verify the reported issue before approving any refund. Refund decisions are made at the sole discretion of Creatorstack. If a refund is approved, it will be processed to the original payment method within 7–10 business days.</p>
+
+      <h3>5. Chargebacks</h3>
+      <p>We strongly encourage customers to contact us before initiating a chargeback. Fraudulent chargebacks may result in permanent account bans, legal action, and blacklisting. We document all purchases and deliveries carefully.</p>
+
+      <h3>6. Contact</h3>
+      <p>For all refund inquiries: <strong>[SUPPORT_EMAIL]</strong><br/>Response time: 24–48 business hours.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     MODAL: DISCLAIMER
+     ============================================================ -->
+<div class="modal-overlay" id="modal-disclaimer">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Disclaimer</h2>
+      <div class="modal-close" onclick="closeModal('disclaimer')">✕</div>
+    </div>
+    <div class="modal-body">
+      <p><strong>Last Updated:</strong> January 1, 2026</p>
+
+      <h3>1. No Earnings or Income Guarantee</h3>
+      <p>The information, products, and resources provided by Creatorstack are for educational and informational purposes only. Creatorstack makes no guarantees, warranties, representations, or assurances of any kind — express or implied — regarding income, earnings, revenue, success, or results of any kind. Individual outcomes will vary significantly based on personal factors including effort, skill, experience, market conditions, timing, and many other variables outside of our control.</p>
+
+      <h3>2. Testimonials and Case Studies</h3>
+      <p>Any testimonials, success stories, case studies, or results showcased on this website represent individual experiences and are not typical. These are shared for illustrative purposes only and should not be interpreted as a promise or guarantee of similar results. Your experience will likely differ from those featured.</p>
+
+      <h3>3. Not Professional Advice</h3>
+      <p>Nothing on the Creatorstack website or within our products constitutes legal, financial, tax, accounting, or professional advice of any kind. You should consult with qualified professionals before making any business, financial, or legal decisions. Creatorstack is not a licensed financial advisor, attorney, or business consultant.</p>
+
+      <h3>4. Forward-Looking Statements</h3>
+      <p>Some content on our website may include forward-looking statements or projections about the creator economy, freelancing market, or digital trends. These statements are based on current information and beliefs and are subject to change. They should not be relied upon as guarantees of future performance or outcomes.</p>
+
+      <h3>5. External Links</h3>
+      <p>Our website may contain links to third-party websites. These links are provided for convenience and informational purposes only. Creatorstack does not endorse, control, or take responsibility for the content, accuracy, or practices of any third-party websites.</p>
+
+      <h3>6. Product Accuracy</h3>
+      <p>While we make every effort to ensure our products are accurate, current, and valuable, Creatorstack does not warrant that all information is complete, accurate, or free of errors. The digital landscape changes rapidly; some strategies and information may become outdated over time.</p>
+
+      <h3>7. Limitation of Liability</h3>
+      <p>By purchasing from or using Creatorstack, you agree that Creatorstack and its affiliated parties shall not be held liable for any direct, indirect, incidental, consequential, or punitive damages arising from your use of our products, services, or website, even if we have been advised of the possibility of such damages.</p>
+
+      <h3>8. Contact</h3>
+      <p>Questions about this disclaimer may be directed to: <strong>[SUPPORT_EMAIL]</strong></p>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
