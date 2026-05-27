@@ -261,10 +261,17 @@
       justify-content: center;
       cursor: pointer;
       z-index: 2;
-      transition: all .2s ease;
-      box-shadow: var(--shadow-sm);
+      transition: all .3s cubic-bezier(.16,1,.3,1);
+      box-shadow: 0 4px 12px rgba(0,0,0,.12);
     }
-    .carousel-btn:hover { background: #fff; transform: translateY(-50%) scale(1.05); }
+    .carousel-btn:hover {
+      background: #fff;
+      transform: translateY(-50%) scale(1.08);
+      box-shadow: 0 8px 24px rgba(184,147,90,.2);
+    }
+    .carousel-btn:active {
+      transform: translateY(-50%) scale(0.95);
+    }
     .carousel-btn.prev { left: 14px; }
     .carousel-btn.next { right: 14px; }
     .carousel-btn svg { width: 16px; height: 16px; stroke: var(--text-1); fill: none; stroke-width: 2; }
@@ -390,23 +397,27 @@
       font-weight: 500;
       letter-spacing: .02em;
       cursor: pointer;
-      transition: all .25s ease;
+      transition: all .3s cubic-bezier(.16,1,.3,1);
       position: relative;
       overflow: hidden;
+      box-shadow: 0 8px 24px rgba(28,27,24,.15);
     }
     .btn-primary::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: var(--gold);
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
       opacity: 0;
-      transition: opacity .25s ease;
+      transition: opacity .3s cubic-bezier(.16,1,.3,1);
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+    .btn-primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(184,147,90,.25);
+    }
     .btn-primary:hover::before { opacity: 1; }
     .btn-primary span, .btn-primary svg { position: relative; z-index: 1; }
     .btn-primary svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
-    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:active { transform: translateY(-1px); }
 
     .security-note {
       display: flex;
@@ -526,10 +537,11 @@
       font-size: 1rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all .25s ease;
+      transition: all .3s cubic-bezier(.16,1,.3,1);
       position: relative;
       overflow: hidden;
       letter-spacing: .01em;
+      box-shadow: 0 8px 24px rgba(28,27,24,.15);
     }
     .btn-pay::before {
       content: '';
@@ -537,12 +549,15 @@
       inset: 0;
       background: linear-gradient(135deg, var(--gold-light), var(--gold));
       opacity: 0;
-      transition: opacity .25s ease;
+      transition: opacity .3s cubic-bezier(.16,1,.3,1);
     }
-    .btn-pay:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,.2); }
+    .btn-pay:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(184,147,90,.25);
+    }
     .btn-pay:hover::before { opacity: 1; }
     .btn-pay span, .btn-pay svg { position: relative; z-index: 1; }
-    .btn-pay:active { transform: translateY(0); }
+    .btn-pay:active { transform: translateY(-1px); }
     .btn-pay:disabled { opacity: .6; pointer-events: none; }
     .btn-pay .pay-amount { font-family: var(--font-display); font-size: 1.1rem; }
 
@@ -620,7 +635,7 @@
         margin: 0;
       }
       .carousel {
-        aspect-ratio: 4/3;
+        aspect-ratio: 1 / 1;
         border-radius: 20px;
       }
       .carousel-slide img { border-radius: 20px; }
@@ -660,15 +675,26 @@
        FOOTER STYLES
        ============================================================ */
     footer {
-      background: var(--ink, #0E0E0E);
+      background: linear-gradient(180deg, var(--ink, #0E0E0E) 0%, #0a0a0f 50%, var(--ink, #0E0E0E) 100%);
       color: rgba(255,255,255,0.6);
-      padding: 80px 0 0;
+      padding: 120px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200,169,110,0.3), transparent);
     }
     .footer-top {
       display: grid;
       grid-template-columns: 1.5fr 1fr 1fr 1fr;
       gap: 60px;
-      padding: 0 0 64px;
+      padding: 80px 0 64px;
+      position: relative;
+      z-index: 2;
     }
     .footer-logo {
       display: flex;
@@ -679,6 +705,10 @@
       font-size: 1.3rem;
       color: #fff;
       margin-bottom: 16px;
+      transition: transform 0.3s;
+    }
+    .footer-logo:hover {
+      transform: translateY(-2px);
     }
     .nav-logo-icon {
       display: flex;
@@ -692,37 +722,27 @@
       line-height: 1.7;
       margin-bottom: 24px;
       max-width: 280px;
-    }
-    .footer-social-row {
-      display: flex;
-      gap: 12px;
-    }
-    .social-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      color: rgba(255,255,255,0.5);
-      transition: background 0.2s, color 0.2s, transform 0.2s;
-      text-decoration: none;
-    }
-    .social-icon:hover {
-      background: #C8A96E;
-      color: #fff;
-      transform: translateY(-3px);
+      color: rgba(255,255,255,0.55);
     }
     .footer-col-title {
       font-size: 0.72rem;
       font-family: 'JetBrains Mono', monospace;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
+      color: #D4AB72;
       margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      padding-bottom: 12px;
+    }
+    .footer-col-title::after {
+      content: '';
+      height: 2px;
+      width: 24px;
+      background: linear-gradient(90deg, #D4AB72, transparent);
+      border-radius: 2px;
     }
     .footer-links {
       display: flex;
@@ -733,39 +753,65 @@
     .footer-links li a {
       font-size: 0.875rem;
       color: rgba(255,255,255,0.55);
-      transition: color 0.2s;
+      transition: color 0.3s, transform 0.3s;
+      position: relative;
+      display: inline-block;
+    }
+    .footer-links li a::before {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #B8935A;
+      transition: width 0.3s;
     }
     .footer-links li a:hover {
-      color: #C8A96E;
+      color: #B8935A;
+      transform: translateX(4px);
+    }
+    .footer-links li a:hover::before {
+      width: 100%;
     }
     .footer-contact-item {
       font-size: 0.875rem;
       line-height: 1.6;
       margin-bottom: 10px;
+      color: rgba(255,255,255,0.55);
     }
     .footer-contact-item a {
-      color: #C8A96E;
-      transition: opacity 0.2s;
+      color: #D4AB72;
+      transition: color 0.3s, text-shadow 0.3s;
     }
     .footer-contact-item a:hover {
-      opacity: 0.7;
+      color: #B8935A;
+      text-shadow: 0 0 8px rgba(184,147,90,0.5);
     }
     .footer-divider {
       border: none;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,255,0.08);
       margin: 0;
+      background: linear-gradient(90deg, transparent, rgba(184,147,90,0.2), transparent);
+      height: 1px;
     }
     .footer-bottom {
-      padding: 24px 0;
+      padding: 32px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 16px;
+      background: linear-gradient(90deg, rgba(184,147,90,0.02), transparent 50%, rgba(184,147,90,0.02));
+      border-radius: 16px 16px 0 0;
     }
     .footer-copy {
       font-size: 0.8rem;
-      color: rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.35);
+      transition: color 0.3s;
+    }
+    .footer-copy:hover {
+      color: rgba(255,255,255,0.5);
     }
     .footer-policy-links {
       display: flex;
@@ -775,14 +821,29 @@
     .footer-policy-links button {
       font-size: 0.8rem;
       color: rgba(255,255,255,0.35);
-      transition: color 0.2s;
+      transition: color 0.3s, transform 0.3s;
       cursor: pointer;
       font-family: 'DM Sans', system-ui, sans-serif;
       border: none;
       background: none;
+      position: relative;
+    }
+    .footer-policy-links button::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #B8935A;
+      transition: width 0.3s;
     }
     .footer-policy-links button:hover {
-      color: #C8A96E;
+      color: #B8935A;
+      transform: translateY(-1px);
+    }
+    .footer-policy-links button:hover::after {
+      width: 100%;
     }
 
     /* ============================================================
@@ -868,6 +929,79 @@
     }
     .modal-body ul li {
       margin-bottom: 6px;
+    }
+
+    /* ── Enhanced Animations & Effects ─────────────────────────── */
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-24px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(24px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes glowEffect {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(184,147,90,0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(184,147,90,0); }
+    }
+
+    /* Product info animation */
+    .product-info {
+      animation: slideInRight 0.6s cubic-bezier(.16,1,.3,1) 0.2s both;
+    }
+
+    /* Carousel enhanced shadow */
+    .carousel-wrap {
+      box-shadow: 0 12px 40px rgba(0,0,0,.12);
+      transition: box-shadow 0.3s cubic-bezier(.16,1,.3,1);
+    }
+    .carousel-wrap:hover {
+      box-shadow: 0 16px 56px rgba(184,147,90,.15);
+    }
+
+    /* Badge pulse animation */
+    @keyframes badgePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+    .product-badge {
+      animation: badgePulse 2.5s ease-in-out infinite;
+    }
+
+    /* Divider animation */
+    .divider {
+      background: linear-gradient(90deg, transparent, var(--border-soft), transparent);
+      animation: slideInLeft 0.8s cubic-bezier(.16,1,.3,1);
+    }
+
+    /* Price display animation */
+    .price-amount {
+      display: inline-block;
+      animation: slideInScale 0.6s cubic-bezier(.16,1,.3,1) 0.3s both;
+    }
+
+    /* Form input enhanced styles */
+    .form-input {
+      transition: border-color .3s cubic-bezier(.16,1,.3,1), box-shadow .3s cubic-bezier(.16,1,.3,1), background .3s ease;
+    }
+    .form-input:focus {
+      border-color: var(--gold);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(184,147,90,.15);
+    }
+
+    /* Product name animation */
+    .product-name {
+      animation: slideInLeft 0.6s cubic-bezier(.16,1,.3,1) 0.1s both;
+    }
+
+    /* Security note subtle fade */
+    .security-note {
+      animation: fadeInScale 0.6s cubic-bezier(.16,1,.3,1) 0.5s both;
     }
 
     @media (max-width: 1024px) {
@@ -1478,13 +1612,6 @@ document.addEventListener('keydown', e => {
         <p class="footer-brand-desc">
           The premium freelancer operating system. Complete toolkit and battle-tested blueprints for high-earning freelancers and digital professionals who refuse to compete on price.
         </p>
-        <!-- Replace social URLs with actual links -->
-        <div class="footer-social-row">
-          <a href="[INSTAGRAM_URL]" class="social-icon" title="Instagram">📸</a>
-          <a href="[TWITTER_URL]"   class="social-icon" title="Twitter / X">🐦</a>
-          <a href="[LINKEDIN_URL]"  class="social-icon" title="LinkedIn">💼</a>
-          <a href="[YOUTUBE_URL]"   class="social-icon" title="YouTube">▶️</a>
-        </div>
       </div>
 
       <!-- Products Column -->
@@ -1510,7 +1637,7 @@ document.addEventListener('keydown', e => {
       <div>
         <div class="footer-col-title">Contact & Legal</div>
         <!-- Replace placeholders with actual info -->
-        <div class="footer-contact-item">📧 <a href="mailto:[SUPPORT_EMAIL]">[SUPPORT_EMAIL]</a></div>
+        <div class="footer-contact-item">📧 <a href="mailto:creatorstackin@gmail.com">creatorstackin@gmail.com</a></div>
         <div class="footer-contact-item" style="font-size:0.8rem;line-height:1.5;">[BUSINESS_ADDRESS]</div>
         <ul class="footer-links" style="margin-top:16px;">
           <li><a href="#" onclick="openModal('terms')">Terms of Service</a></li>
@@ -1581,7 +1708,7 @@ document.addEventListener('keydown', e => {
       <p>These Terms shall be governed by and construed in accordance with the laws of India. Any disputes arising from these Terms or your use of our products shall be subject to the exclusive jurisdiction of the courts of India.</p>
 
       <h3>10. Contact</h3>
-      <p>For questions regarding these Terms, please contact us at: <strong>[SUPPORT_EMAIL]</strong></p>
+      <p>For questions regarding these Terms, please contact us at: <strong>creatorstackin@gmail.com</strong></p>
     </div>
   </div>
 </div>
@@ -1644,7 +1771,7 @@ document.addEventListener('keydown', e => {
       <p>We may update this Privacy Policy periodically. The updated version will be indicated by a revised "Last Updated" date. Your continued use of our website after changes constitutes acceptance of the updated policy.</p>
 
       <h3>10. Contact Us</h3>
-      <p>For privacy-related questions or concerns: <strong>[SUPPORT_EMAIL]</strong></p>
+      <p>For privacy-related questions or concerns: <strong>creatorstackin@gmail.com</strong></p>
     </div>
   </div>
 </div>
@@ -1690,7 +1817,7 @@ document.addEventListener('keydown', e => {
       <h3>4. How to Request a Refund</h3>
       <p>If you believe you qualify for a refund under Section 3 above, please:</p>
       <ul>
-        <li>Contact us at <strong>[SUPPORT_EMAIL]</strong> within 7 calendar days of your purchase date.</li>
+        <li>Contact us at <strong>creatorstackin@gmail.com</strong> within 7 calendar days of your purchase date.</li>
         <li>Include your full name, email address used for purchase, order confirmation number, and a clear description of the technical issue.</li>
         <li>Provide screenshots or documentation of the issue as proof.</li>
       </ul>
@@ -1700,7 +1827,7 @@ document.addEventListener('keydown', e => {
       <p>We strongly encourage customers to contact us before initiating a chargeback. Fraudulent chargebacks may result in permanent account bans, legal action, and blacklisting. We document all purchases and deliveries carefully.</p>
 
       <h3>6. Contact</h3>
-      <p>For all refund inquiries: <strong>[SUPPORT_EMAIL]</strong><br/>Response time: 24–48 business hours.</p>
+      <p>For all refund inquiries: <strong>creatorstackin@gmail.com</strong><br/>Response time: 24–48 business hours.</p>
     </div>
   </div>
 </div>
@@ -1739,7 +1866,7 @@ document.addEventListener('keydown', e => {
       <p>By purchasing from or using Creatorstack, you agree that Creatorstack and its affiliated parties shall not be held liable for any direct, indirect, incidental, consequential, or punitive damages arising from your use of our products, services, or website, even if we have been advised of the possibility of such damages.</p>
 
       <h3>8. Contact</h3>
-      <p>Questions about this disclaimer may be directed to: <strong>[SUPPORT_EMAIL]</strong></p>
+      <p>Questions about this disclaimer may be directed to: <strong>creatorstackin@gmail.com</strong></p>
     </div>
   </div>
 </div>
