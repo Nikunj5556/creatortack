@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#FAF9F6" />
   <title>Creatorstack</title>
-
+ 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
+ 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
+ 
   <style>
     /* ── Reset & Variables ──────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -57,86 +57,73 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
+ 
     /* ── Layout ─────────────────────────────────────────────────── */
     #app { min-height: 100dvh; }
     .page { display: none; opacity: 0; transform: translateY(16px); transition: opacity var(--transition), transform var(--transition); }
     .page.active { display: block; opacity: 1; transform: translateY(0); }
-
+ 
+    /* ── Container ──────────────────────────────────────────────── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+    @media (max-width: 768px) { .container { padding: 0 20px; } }
+ 
     /* ── Brand Bar ──────────────────────────────────────────────── */
     .brand-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      display: flex; align-items: center; gap: 10px;
       padding: 20px 24px;
       border-bottom: 1px solid var(--border-soft);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: sticky; top: 0; z-index: 100;
       backdrop-filter: blur(12px);
       background: rgba(255,255,255,.92);
     }
     .brand-bar img.logo { height: 32px; width: auto; object-fit: contain; }
     .brand-bar .brand-name {
-      font-family: var(--font-display);
-      font-size: 1.35rem;
-      font-weight: 500;
-      letter-spacing: .01em;
-      color: var(--text-1);
+      font-family: var(--font-display); font-size: 1.35rem;
+      font-weight: 500; letter-spacing: .01em; color: var(--text-1);
     }
     .back-btn {
-      padding: 8px 12px;
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--text-1);
-      background: var(--border-soft);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      text-decoration: none;
-      transition: all 0.25s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
+      padding: 8px 12px; font-size: 0.875rem; font-weight: 500;
+      color: var(--text-1); background: var(--border-soft);
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      text-decoration: none; transition: all 0.25s ease;
+      display: inline-flex; align-items: center; gap: 4px; cursor: pointer;
     }
     .back-btn:hover { background: var(--border); transform: translateX(-2px); }
-
+ 
     /* ── Loading / Error ────────────────────────────────────────── */
     #page-loading {
       display: flex; flex-direction: column; align-items: center;
       justify-content: center; min-height: calc(100dvh - 73px); gap: 16px;
     }
     .spinner {
-      width: 36px; height: 36px;
-      border: 2px solid var(--border);
-      border-top-color: var(--gold);
-      border-radius: 50%;
+      width: 36px; height: 36px; border: 2px solid var(--border);
+      border-top-color: var(--gold); border-radius: 50%;
       animation: spin .8s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
     .loading-text { font-size: .875rem; color: var(--text-3); font-weight: 300; letter-spacing: .04em; }
-
+ 
     #page-error {
       display: flex; flex-direction: column; align-items: center;
-      justify-content: center; min-height: calc(100dvh - 73px); padding: 40px 24px; text-align: center; gap: 12px;
+      justify-content: center; min-height: calc(100dvh - 73px);
+      padding: 40px 24px; text-align: center; gap: 12px;
     }
     .error-icon { font-size: 3rem; opacity: .3; }
     .error-title { font-family: var(--font-display); font-size: 2rem; font-weight: 400; color: var(--text-1); }
     .error-sub { font-size: .9rem; color: var(--text-2); max-width: 340px; }
-
+ 
     /* ══════════════════════════════════════════════════════════════
        PRODUCT PAGE
     ══════════════════════════════════════════════════════════════ */
-    #page-product { max-width: 1100px; margin: 0 auto; padding: 0 0 80px; }
+    /* Extra bottom padding so sticky bar never covers content */
+    #page-product { max-width: 1100px; margin: 0 auto; padding: 0 0 120px; }
     .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: start; }
-
+ 
     /* Carousel */
     .carousel-wrap {
-      position: sticky; top: 73px;
-      background: var(--surface-2);
+      position: sticky; top: 73px; background: var(--surface-2);
       overflow: hidden; border-radius: 24px;
-      box-shadow: 0 12px 40px rgba(0,0,0,.12);
-      transition: box-shadow 0.3s ease;
+      box-shadow: 0 12px 40px rgba(0,0,0,.12); transition: box-shadow 0.3s ease;
     }
     .carousel-wrap:hover { box-shadow: 0 16px 56px rgba(184,147,90,.15); }
     .carousel { position: relative; aspect-ratio: 1/1; overflow: hidden; background: var(--surface-2); cursor: grab; user-select: none; border-radius: 24px; }
@@ -154,19 +141,18 @@
       width: 40px; height: 40px; border-radius: 50%;
       background: rgba(255,255,255,.92); border: 1px solid var(--border-soft);
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer; z-index: 2;
-      transition: all .3s cubic-bezier(.16,1,.3,1);
+      cursor: pointer; z-index: 2; transition: all .3s cubic-bezier(.16,1,.3,1);
       box-shadow: 0 4px 12px rgba(0,0,0,.12);
     }
     .carousel-btn:hover { background: #fff; transform: translateY(-50%) scale(1.08); box-shadow: 0 8px 24px rgba(184,147,90,.2); }
     .carousel-btn.prev { left: 14px; }
     .carousel-btn.next { right: 14px; }
     .carousel-btn svg { width: 16px; height: 16px; stroke: var(--text-1); fill: none; stroke-width: 2; }
-
+ 
     /* Product Info */
     .product-info { padding: 52px 52px 52px 48px; display: flex; flex-direction: column; gap: 28px; animation: slideInRight 0.6s cubic-bezier(.16,1,.3,1) 0.2s both; }
     @keyframes slideInRight { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
-
+ 
     .product-badge {
       display: inline-flex; align-items: center; gap: 6px;
       background: var(--gold-pale); color: var(--gold);
@@ -175,29 +161,25 @@
       animation: badgePulse 2.5s ease-in-out infinite;
     }
     @keyframes badgePulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.02)} }
-
+ 
     /* Affiliate indicator */
     .affiliate-indicator {
-      display: none;
-      align-items: center; gap: 8px;
-      background: var(--green-pale);
-      color: var(--green-dark);
+      display: none; align-items: center; gap: 8px;
+      background: var(--green-pale); color: var(--green-dark);
       font-size: .78rem; font-weight: 500;
-      padding: 8px 14px; border-radius: 20px;
-      border: 1px solid rgba(61,138,110,.2);
-      width: fit-content;
-      animation: fadeIn .4s ease;
+      padding: 8px 14px; border-radius: 20px; border: 1px solid rgba(61,138,110,.2);
+      width: fit-content; animation: fadeIn .4s ease;
     }
     .affiliate-indicator.show { display: inline-flex; }
     @keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
     .affiliate-indicator svg { width: 13px; height: 13px; stroke: var(--green); fill: none; stroke-width: 2; flex-shrink: 0; }
-
+ 
     .product-name { font-family: var(--font-display); font-size: 2.6rem; font-weight: 400; line-height: 1.15; letter-spacing: -.01em; color: var(--text-1); animation: slideInLeft 0.6s cubic-bezier(.16,1,.3,1) 0.1s both; }
     @keyframes slideInLeft { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: translateX(0); } }
-
+ 
     .product-description { font-size: .95rem; line-height: 1.85; color: var(--text-2); font-weight: 300; white-space: pre-wrap; word-wrap: break-word; margin: 12px 0; }
     .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border-soft), transparent); }
-
+ 
     .price-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
     .price-currency { font-size: 1.4rem; color: var(--text-2); font-weight: 300; }
     .price-amount { font-family: var(--font-display); font-size: 3rem; font-weight: 500; color: var(--text-1); letter-spacing: -.02em; }
@@ -205,7 +187,8 @@
     .price-original { font-size: .95rem; color: var(--text-3); text-decoration: line-through; text-decoration-thickness: 1.5px; text-decoration-color: var(--border); display: inline-block; margin-left: 4px; }
     .price-savings { display: inline-flex; align-items: center; gap: 6px; background: var(--green-pale); color: var(--green); font-size: .8rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(61,138,110,.2); margin-left: 12px; }
     .price-savings svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5; }
-
+ 
+    /* ── Buy Now button ─────────────────────────────────────────── */
     .btn-primary {
       display: flex; align-items: center; justify-content: center; gap: 10px;
       width: 100%; padding: 17px 28px;
@@ -222,21 +205,85 @@
     .btn-primary span, .btn-primary svg { position: relative; z-index: 1; }
     .btn-primary svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
     .btn-primary:active { transform: translateY(-1px); }
-
+ 
     .security-note { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: .78rem; color: var(--text-3); font-weight: 300; animation: fadeIn 0.6s ease 0.5s both; }
     .security-note svg { width: 13px; height: 13px; stroke: var(--text-3); fill: none; stroke-width: 2; flex-shrink: 0; }
-
+ 
+    /* ── Trust Strip ─────────────────────────────────────────────── */
+    .trust-strip {
+      display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap;
+      padding: 12px 0; border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft);
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 5px;
+      font-size: .74rem; color: var(--text-2); font-weight: 400; letter-spacing: .01em;
+      padding: 4px 12px;
+    }
+    .trust-item:not(:last-child) { border-right: 1px solid var(--border-soft); }
+    .trust-item-icon { font-size: .85rem; }
+ 
+    /* ── Guarantee Badge ─────────────────────────────────────────── */
+    .guarantee-badge {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 16px;
+      background: linear-gradient(135deg, var(--green-pale), #eef8f3);
+      border: 1px solid rgba(61,138,110,.2); border-radius: var(--radius-sm);
+    }
+    .guarantee-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 1px; }
+    .guarantee-text { display: flex; flex-direction: column; gap: 2px; }
+    .guarantee-title { font-size: .82rem; font-weight: 600; color: var(--green-dark); }
+    .guarantee-sub { font-size: .75rem; color: var(--green); font-weight: 300; line-height: 1.5; }
+ 
+    /* ══════════════════════════════════════════════════════════════
+       STICKY BUY BAR (product page)
+    ══════════════════════════════════════════════════════════════ */
+    #sticky-buy-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: rgba(24, 23, 20, 0.98);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      padding: 14px 24px;
+      padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+      z-index: 200;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(.16,1,.3,1);
+      border-top: 1px solid rgba(255,255,255,.07);
+      box-shadow: 0 -12px 40px rgba(0,0,0,.35);
+      display: none; /* shown by JS only when product page is active */
+    }
+    #sticky-buy-bar.show { transform: translateY(0); }
+    .sticky-buy-content {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .sticky-buy-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+    .sticky-buy-name {
+      font-size: .8rem; color: rgba(255,255,255,.5); font-weight: 300;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: .01em;
+    }
+    .sticky-buy-price { font-family: var(--font-display); font-size: 1.55rem; color: #fff; font-weight: 500; letter-spacing: -.01em; }
+    .sticky-buy-btn {
+      padding: 13px 28px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: #fff; border: none; border-radius: var(--radius);
+      font-family: var(--font-body); font-size: .92rem; font-weight: 600;
+      cursor: pointer; white-space: nowrap; flex-shrink: 0;
+      transition: all .25s cubic-bezier(.16,1,.3,1);
+      letter-spacing: .02em; box-shadow: 0 4px 20px rgba(184,147,90,.45);
+    }
+    .sticky-buy-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(184,147,90,.6); }
+    .sticky-buy-btn:active { transform: translateY(0); }
+ 
     /* ══════════════════════════════════════════════════════════════
        CHECKOUT PAGE
     ══════════════════════════════════════════════════════════════ */
     #page-checkout { min-height: calc(100dvh - 73px); display: flex; align-items: flex-start; justify-content: center; padding: 48px 24px 80px; }
     .checkout-card { width: 100%; max-width: 460px; background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border-soft); box-shadow: var(--shadow-md); overflow: hidden; }
-
+ 
     .checkout-header { padding: 28px 32px 24px; border-bottom: 1px solid var(--border-soft); display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
     .checkout-label { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--text-3); font-weight: 500; margin-bottom: 4px; }
     .checkout-product-name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; line-height: 1.2; color: var(--text-1); }
     .checkout-price-badge { background: var(--gold-pale); color: var(--gold); font-family: var(--font-display); font-size: 1.3rem; font-weight: 500; padding: 6px 14px; border-radius: 8px; white-space: nowrap; border: 1px solid rgba(184,147,90,.2); flex-shrink: 0; }
-
+ 
     .checkout-body { padding: 28px 32px; display: flex; flex-direction: column; gap: 20px; }
     .form-group { display: flex; flex-direction: column; gap: 7px; }
     .form-label { font-size: .8rem; font-weight: 500; color: var(--text-2); letter-spacing: .02em; }
@@ -250,11 +297,20 @@
     .form-input:focus { border-color: var(--gold); background: #fff; box-shadow: 0 0 0 4px rgba(184,147,90,.12); }
     .form-input::placeholder { color: var(--text-3); }
     .form-input.error { border-color: var(--red); box-shadow: 0 0 0 3px rgba(192,57,43,.10); }
+    .form-input.valid { border-color: var(--green); background: #fff; }
     .field-error { font-size: .75rem; color: var(--red); display: none; }
     .field-error.show { display: block; }
-
+ 
+    /* Checkout security strip */
+    .checkout-security-strip {
+      display: flex; align-items: center; gap: 7px;
+      padding: 10px 14px; background: var(--green-pale);
+      border: 1px solid rgba(61,138,110,.15); border-radius: var(--radius-sm);
+      font-size: .76rem; color: var(--green-dark); font-weight: 400;
+    }
+ 
     .checkout-footer { padding: 0 32px 28px; display: flex; flex-direction: column; gap: 12px; }
-
+ 
     .btn-continue {
       display: flex; align-items: center; justify-content: center; gap: 10px;
       width: 100%; padding: 16px 28px;
@@ -270,7 +326,7 @@
     .btn-continue:hover::before { opacity: 1; }
     .btn-continue span, .btn-continue svg { position: relative; z-index: 1; }
     .btn-continue svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
-
+ 
     .btn-back {
       background: none; border: 1.5px solid var(--border); border-radius: var(--radius-sm);
       padding: 11px 20px; font-family: var(--font-body); font-size: .875rem; color: var(--text-2);
@@ -279,7 +335,7 @@
     }
     .btn-back:hover { border-color: var(--text-2); color: var(--text-1); }
     .btn-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
-
+ 
     /* ══════════════════════════════════════════════════════════════
        REVIEW PAGE
     ══════════════════════════════════════════════════════════════ */
@@ -288,56 +344,80 @@
       display: flex; align-items: flex-start; justify-content: center;
       padding: 48px 24px 80px;
     }
-
     .review-card {
-      width: 100%; max-width: 460px;
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-soft);
-      box-shadow: var(--shadow-md);
-      overflow: hidden;
+      width: 100%; max-width: 460px; background: var(--surface);
+      border-radius: var(--radius-lg); border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-md); overflow: hidden;
     }
-
-    .review-header {
-      padding: 28px 32px 24px;
-      border-bottom: 1px solid var(--border-soft);
-    }
-    .review-header-top {
-      display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
-    }
-
+ 
+    .review-header { padding: 28px 32px 20px; border-bottom: 1px solid var(--border-soft); }
+    .review-header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+ 
     /* Step indicator */
-    .step-indicator {
-      display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
-    }
-    .step-pip {
-      height: 3px; border-radius: 2px;
-      transition: all .3s ease;
-    }
+    .step-indicator { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+    .step-pip { height: 3px; border-radius: 2px; transition: all .3s ease; }
     .step-pip.done { background: var(--green); flex: 1; }
     .step-pip.active { background: var(--gold); flex: 2; }
     .step-pip.pending { background: var(--border); flex: 1; }
-    .step-label { font-size: .7rem; color: var(--text-3); font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
-
-    .review-product-name {
-      font-family: var(--font-display);
-      font-size: 1.5rem; font-weight: 400; line-height: 1.2; color: var(--text-1);
-    }
+ 
+    .review-product-name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; line-height: 1.2; color: var(--text-1); }
     .review-price-badge {
       background: var(--gold-pale); color: var(--gold);
       font-family: var(--font-display); font-size: 1.3rem; font-weight: 500;
-      padding: 6px 14px; border-radius: 8px;
-      border: 1px solid rgba(184,147,90,.2); flex-shrink: 0;
-      white-space: nowrap;
+      padding: 6px 14px; border-radius: 8px; border: 1px solid rgba(184,147,90,.2);
+      flex-shrink: 0; white-space: nowrap;
     }
-
+ 
+    /* ── Pay section — moved to TOP of card ─────────────────────── */
+    .review-pay-section {
+      padding: 22px 32px;
+      background: linear-gradient(145deg, #1e1d1a 0%, #252420 100%);
+      display: flex; flex-direction: column; gap: 14px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .review-total-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .review-total-label {
+      font-size: .72rem; color: rgba(255,255,255,.45); font-weight: 400;
+      letter-spacing: .08em; text-transform: uppercase;
+    }
+    .review-total-amount {
+      font-family: var(--font-display); font-size: 2rem; color: #fff; font-weight: 500; letter-spacing: -.01em;
+    }
+ 
+    /* Pay Now button — gold on dark section */
+    .btn-pay-now {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 16px 28px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #fff;
+      border: none; border-radius: var(--radius);
+      font-family: var(--font-body); font-size: 1.05rem; font-weight: 600;
+      cursor: pointer; position: relative; overflow: hidden; letter-spacing: .02em;
+      box-shadow: 0 6px 24px rgba(184,147,90,.5);
+      transition: all .3s cubic-bezier(.16,1,.3,1);
+    }
+    .btn-pay-now::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.15), transparent);
+      opacity: 0; transition: opacity .3s ease;
+    }
+    .btn-pay-now:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(184,147,90,.65); }
+    .btn-pay-now:hover::after { opacity: 1; }
+    .btn-pay-now span, .btn-pay-now svg { position: relative; z-index: 1; }
+    .btn-pay-now .pay-amount { font-family: var(--font-display); font-size: 1.2rem; }
+    .btn-pay-now:disabled { opacity: .6; pointer-events: none; }
+ 
+    .review-security-note {
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+      font-size: .72rem; color: rgba(255,255,255,.35); font-weight: 300;
+    }
+ 
     /* Customer summary */
     .customer-summary {
-      margin: 0 32px;
-      padding: 14px 16px;
-      background: var(--surface-2);
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-soft);
+      margin: 20px 32px 0;
+      padding: 14px 16px; background: var(--surface-2);
+      border-radius: var(--radius-sm); border: 1px solid var(--border-soft);
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
     .customer-summary-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
@@ -349,32 +429,39 @@
       border-radius: 6px; transition: all .2s ease; white-space: nowrap; flex-shrink: 0;
     }
     .btn-edit:hover { background: var(--gold-pale); }
-
-    /* Affiliate badge (review page) */
+ 
+    /* Affiliate badge */
     .review-affiliate {
-      display: none;
-      margin: 12px 32px 0;
-      padding: 10px 16px;
-      background: var(--green-pale);
-      border: 1px solid rgba(61,138,110,.2);
-      border-radius: var(--radius-sm);
+      display: none; margin: 12px 32px 0;
+      padding: 10px 16px; background: var(--green-pale);
+      border: 1px solid rgba(61,138,110,.2); border-radius: var(--radius-sm);
       font-size: .8rem; color: var(--green-dark); font-weight: 500;
       align-items: center; gap: 8px;
     }
     .review-affiliate.show { display: flex; }
     .review-affiliate svg { width: 14px; height: 14px; stroke: var(--green); fill: none; stroke-width: 2; flex-shrink: 0; }
-
+ 
+    /* ── Coupon toggle (collapsible) ─────────────────────────────── */
+    .coupon-toggle { padding: 16px 32px 0; }
+    .coupon-toggle-btn {
+      width: 100%; background: none;
+      border: 1.5px dashed var(--border); border-radius: var(--radius-sm);
+      padding: 10px 16px; font-family: var(--font-body);
+      font-size: .82rem; color: var(--text-3);
+      cursor: pointer; transition: all .25s ease;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .coupon-toggle-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-pale); }
+    .coupon-toggle-btn.active { border-color: var(--gold); color: var(--gold); background: var(--gold-pale); border-style: solid; }
+    .coupon-toggle-chevron { transition: transform .25s ease; font-size: .65rem; opacity: .6; }
+    .coupon-toggle-btn.active .coupon-toggle-chevron { transform: rotate(180deg); }
+ 
     /* Coupon section */
-    .coupon-section {
-      padding: 20px 32px 0;
-    }
-    .coupon-label {
-      font-size: .8rem; font-weight: 500; color: var(--text-2); margin-bottom: 8px; letter-spacing: .02em;
-    }
+    .coupon-section { padding: 14px 32px 0; display: none; }
+    .coupon-section.open { display: block; }
     .coupon-row { display: flex; gap: 8px; }
     .coupon-input {
-      flex: 1;
-      padding: 11px 14px;
+      flex: 1; padding: 11px 14px;
       background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius-sm);
       font-family: var(--font-mono); font-size: .85rem; color: var(--text-1);
       letter-spacing: .05em; text-transform: uppercase;
@@ -385,96 +472,63 @@
     .coupon-input::placeholder { color: var(--text-3); text-transform: none; font-family: var(--font-body); font-size: .875rem; letter-spacing: 0; }
     .coupon-input.applied { border-color: var(--green); background: var(--green-pale); color: var(--green-dark); }
     .coupon-input.invalid { border-color: var(--red); box-shadow: 0 0 0 3px rgba(192,57,43,.08); }
-
+ 
     .btn-apply {
-      padding: 11px 18px;
-      background: var(--text-1); color: #fff;
+      padding: 11px 18px; background: var(--text-1); color: #fff;
       border: none; border-radius: var(--radius-sm);
       font-family: var(--font-body); font-size: .85rem; font-weight: 500;
-      cursor: pointer; white-space: nowrap;
-      transition: all .25s ease;
+      cursor: pointer; white-space: nowrap; transition: all .25s ease;
     }
     .btn-apply:hover { background: var(--gold); }
     .btn-apply:disabled { opacity: .5; cursor: not-allowed; }
-
+ 
     .btn-remove-coupon {
-      padding: 11px 14px;
-      background: var(--red-pale); color: var(--red);
+      padding: 11px 14px; background: var(--red-pale); color: var(--red);
       border: 1.5px solid rgba(192,57,43,.2); border-radius: var(--radius-sm);
       font-family: var(--font-body); font-size: .82rem; font-weight: 500;
-      cursor: pointer; white-space: nowrap;
-      transition: all .25s ease; display: none; align-items: center; gap: 5px;
+      cursor: pointer; white-space: nowrap; transition: all .25s ease;
+      display: none; align-items: center; gap: 5px;
     }
     .btn-remove-coupon.show { display: flex; }
     .btn-remove-coupon:hover { background: var(--red); color: #fff; border-color: var(--red); }
     .btn-remove-coupon svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
-
-    .coupon-feedback {
-      margin-top: 8px; font-size: .78rem; min-height: 18px;
-      transition: all .2s ease;
-    }
+ 
+    .coupon-feedback { margin-top: 8px; font-size: .78rem; min-height: 18px; transition: all .2s ease; }
     .coupon-feedback.success { color: var(--green-dark); }
     .coupon-feedback.error { color: var(--red); }
-
+ 
     /* Price breakdown */
     .price-breakdown {
-      margin: 20px 32px 0;
-      background: var(--surface-2);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-sm);
-      overflow: hidden;
+      margin: 16px 32px 0; background: var(--surface-2);
+      border: 1px solid var(--border-soft); border-radius: var(--radius-sm); overflow: hidden;
     }
     .pb-row {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 16px; gap: 12px;
-      font-size: .875rem;
+      padding: 11px 16px; gap: 12px; font-size: .875rem;
     }
     .pb-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
     .pb-key { color: var(--text-2); font-weight: 400; }
     .pb-val { color: var(--text-1); font-weight: 500; }
     .pb-row.discount .pb-key { color: var(--green-dark); }
     .pb-row.discount .pb-val { color: var(--green-dark); font-weight: 600; }
-    .pb-row.total {
-      background: var(--text-1);
-      padding: 14px 16px;
-    }
-    .pb-row.total .pb-key { color: rgba(255,255,255,.7); font-weight: 500; }
-    .pb-row.total .pb-val { font-family: var(--font-display); font-size: 1.25rem; color: #fff; font-weight: 500; }
-
+    .pb-row.pb-total-row .pb-key { font-weight: 600; color: var(--text-1); }
+    .pb-row.pb-total-row .pb-val { font-family: var(--font-display); font-size: 1.1rem; color: var(--text-1); }
+ 
     /* Review footer */
+    .review-footer { padding: 16px 32px 24px; display: flex; flex-direction: column; gap: 0; }
     .review-body-section { padding: 20px 32px 0; }
-    .review-footer { padding: 20px 32px 28px; display: flex; flex-direction: column; gap: 12px; }
-
-    .btn-pay-now {
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      width: 100%; padding: 16px 28px;
-      background: var(--text-1); color: #fff;
-      border: none; border-radius: var(--radius);
-      font-family: var(--font-body); font-size: 1rem; font-weight: 500;
-      cursor: pointer; position: relative; overflow: hidden; letter-spacing: .01em;
-      box-shadow: 0 8px 24px rgba(28,27,24,.15);
-      transition: all .3s cubic-bezier(.16,1,.3,1);
-    }
-    .btn-pay-now::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--gold-light), var(--gold)); opacity: 0; transition: opacity .3s ease; }
-    .btn-pay-now:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(184,147,90,.25); }
-    .btn-pay-now:hover::before { opacity: 1; }
-    .btn-pay-now span, .btn-pay-now svg { position: relative; z-index: 1; }
-    .btn-pay-now .pay-amount { font-family: var(--font-display); font-size: 1.15rem; }
-    .btn-pay-now:disabled { opacity: .6; pointer-events: none; }
-
+ 
     /* Processing overlay */
     .processing-overlay {
-      position: fixed; inset: 0;
-      background: rgba(250,249,246,.85);
+      position: fixed; inset: 0; background: rgba(250,249,246,.88);
       backdrop-filter: blur(8px);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      z-index: 999; gap: 16px;
-      opacity: 0; pointer-events: none; transition: opacity .3s ease;
+      z-index: 999; gap: 16px; opacity: 0; pointer-events: none; transition: opacity .3s ease;
     }
     .processing-overlay.show { opacity: 1; pointer-events: all; }
     .processing-text { font-family: var(--font-display); font-size: 1.4rem; color: var(--text-1); }
     .processing-sub { font-size: .85rem; color: var(--text-3); font-weight: 300; }
-
+ 
     /* Toast */
     #toast {
       position: fixed; bottom: 32px; left: 50%;
@@ -488,7 +542,7 @@
     #toast.show { transform: translateX(-50%) translateY(0); }
     #toast.error { background: var(--red); }
     #toast.success { background: var(--green); }
-
+ 
     /* ══════════════════════════════════════════════════════════════
        RESPONSIVE
     ══════════════════════════════════════════════════════════════ */
@@ -496,14 +550,17 @@
       .brand-bar { padding: 16px 20px; }
       .brand-bar .brand-name { font-size: 1.15rem; }
       .brand-bar img.logo { height: 26px; }
-
+ 
       .product-grid { grid-template-columns: 1fr; }
       .carousel-wrap { position: relative; top: 0; border-radius: 20px; }
       .carousel { aspect-ratio: 1/1; border-radius: 20px; }
       .product-info { padding: 28px 20px 20px; gap: 20px; }
       .product-name { font-size: 2rem; }
       .price-amount { font-size: 2.4rem; }
-
+ 
+      /* On mobile, the buy bar is always visible (btn already scrolls out quickly) */
+      .trust-item { font-size: .68rem; padding: 4px 8px; }
+ 
       #page-checkout, #page-review { padding: 20px 0 60px; align-items: flex-start; }
       .checkout-card, .review-card {
         border-radius: 0; border-left: none; border-right: none;
@@ -515,19 +572,24 @@
       .checkout-price-badge, .review-price-badge { align-self: flex-start; }
       .checkout-body { padding: 20px 20px; gap: 16px; }
       .checkout-footer, .review-footer { padding: 0 20px 24px; }
-
-      .customer-summary { margin: 0 20px; }
+ 
+      .review-pay-section { padding: 20px 20px; }
+      .customer-summary { margin: 16px 20px 0; }
       .review-affiliate { margin: 12px 20px 0; }
-      .coupon-section { padding: 16px 20px 0; }
-      .price-breakdown { margin: 16px 20px 0; }
-      .review-body-section { padding: 16px 20px 0; }
+      .coupon-toggle { padding: 14px 20px 0; }
+      .coupon-section { padding: 12px 20px 0; }
+      .price-breakdown { margin: 14px 20px 0; }
+      .review-footer { padding: 16px 20px 24px; }
+ 
+      .sticky-buy-name { display: none; }
+      .sticky-buy-btn { padding: 13px 22px; font-size: .88rem; }
     }
-
+ 
     @media (min-width: 721px) and (max-width: 960px) {
       .product-info { padding: 36px 36px 36px 32px; }
       .product-name { font-size: 2.2rem; }
     }
-
+ 
     /* ── Footer ─────────────────────────────────────────────────── */
     footer { background: linear-gradient(180deg,#0E0E0E 0%,#0a0a0f 50%,#0E0E0E 100%); color: rgba(255,255,255,0.6); padding: 120px 0 0; position: relative; overflow: hidden; }
     footer::before { content:''; position:absolute; top:0;left:0;right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(200,169,110,0.3),transparent); }
@@ -550,7 +612,7 @@
     .footer-policy-links{display:flex;gap:24px;flex-wrap:wrap;}
     .footer-policy-links button{font-size:.8rem;color:rgba(255,255,255,.35);cursor:pointer;font-family:'DM Sans',system-ui,sans-serif;border:none;background:none;transition:color .3s;}
     .footer-policy-links button:hover{color:#B8935A;}
-
+ 
     /* ── Modals ─────────────────────────────────────────────────── */
     .modal-overlay{display:none;position:fixed;inset:0;background:rgba(14,14,14,.75);backdrop-filter:blur(12px);z-index:2000;align-items:center;justify-content:center;padding:24px;}
     .modal-overlay.open{display:flex;}
@@ -564,38 +626,38 @@
     .modal-body h3:first-child{margin-top:0;}
     .modal-body p,.modal-body li{font-size:.9rem;color:#5A5A5A;line-height:1.75;margin-bottom:10px;}
     .modal-body ul{padding-left:20px;}
-
+ 
     @media(max-width:1024px){.footer-top{grid-template-columns:1fr 1fr;gap:40px;}}
     @media(max-width:768px){.footer-top{grid-template-columns:1fr;gap:40px;}.footer-bottom{flex-direction:column;align-items:flex-start;}}
   </style>
 </head>
 <body>
-
+ 
 <header class="brand-bar">
   <a href="https://creatorstackin.netlify.app" class="back-btn">← Back</a>
   <img class="logo" src="https://hostimage.com/creatorstack.png" alt="Creatorstack" onerror="this.style.display='none'" />
   <span class="brand-name display">Creatorstack</span>
 </header>
-
+ 
 <div id="app">
-
+ 
   <!-- Loading -->
   <div id="page-loading">
     <div class="spinner"></div>
     <p class="loading-text">Loading…</p>
   </div>
-
+ 
   <!-- Error -->
   <div id="page-error" style="display:none;">
     <div class="error-icon">✦</div>
     <h1 class="error-title display" id="error-title">Product Not Found</h1>
     <p class="error-sub" id="error-msg">The product you're looking for doesn't exist or has been removed.</p>
   </div>
-
+ 
   <!-- ── Product Page ──────────────────────────────────────────── -->
   <div id="page-product" class="page">
     <div class="product-grid">
-
+ 
       <div class="carousel-wrap">
         <div class="carousel" id="carousel" aria-label="Product images">
           <div class="carousel-track" id="carousel-track"></div>
@@ -608,20 +670,24 @@
           </button>
         </div>
       </div>
-
+ 
       <div class="product-info">
         <span class="product-badge">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           Digital Product
         </span>
+ 
         <!-- Affiliate indicator -->
         <div class="affiliate-indicator" id="affiliate-indicator">
           <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
           Referred via affiliate link
         </div>
+ 
         <h1 id="product-name" class="product-name display">—</h1>
         <p id="product-description" class="product-description">—</p>
+ 
         <div class="divider"></div>
+ 
         <div class="price-row">
           <span class="price-currency">₹</span>
           <span id="product-price" class="price-amount display">—</span>
@@ -632,22 +698,43 @@
           </span>
           <span class="price-label" style="width:100%;margin-top:4px;">one-time purchase · instant access</span>
         </div>
+ 
+        <!-- Main Buy Now button — observed by IntersectionObserver -->
         <button class="btn-primary" id="buy-btn" onclick="showCheckout()">
           <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-          <span>Buy Now</span>
+          <span>Buy Now — Get Instant Access</span>
         </button>
+ 
         <p class="security-note">
           <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
           Secured by Razorpay · Instant digital delivery
         </p>
+ 
+        <!-- Trust strip -->
+        <div class="trust-strip">
+          <span class="trust-item"><span class="trust-item-icon">🔒</span> Secure Payment</span>
+          <span class="trust-item"><span class="trust-item-icon">⚡</span> Instant Access</span>
+          <span class="trust-item"><span class="trust-item-icon">💳</span> All Cards</span>
+          <span class="trust-item"><span class="trust-item-icon">🎯</span> One-Time Fee</span>
+        </div>
+ 
+        <!-- Guarantee badge -->
+        <div class="guarantee-badge">
+          <span class="guarantee-icon">🛡️</span>
+          <div class="guarantee-text">
+            <span class="guarantee-title">Satisfaction Guaranteed</span>
+            <span class="guarantee-sub">If your files don't deliver as described, contact us within 7 days for a full resolution</span>
+          </div>
+        </div>
       </div>
+ 
     </div>
   </div>
-
+ 
   <!-- ── Checkout Page ─────────────────────────────────────────── -->
   <div id="page-checkout" class="page">
     <div class="checkout-card">
-
+ 
       <div class="checkout-header">
         <div>
           <p class="checkout-label">Step 1 of 2 · Your Details</p>
@@ -655,7 +742,7 @@
         </div>
         <div id="checkout-price-badge" class="checkout-price-badge display">₹—</div>
       </div>
-
+ 
       <div class="checkout-body">
         <div class="form-group">
           <label class="form-label" for="input-name">Full Name</label>
@@ -667,8 +754,12 @@
           <input class="form-input" id="input-email" type="email" placeholder="you@email.com" autocomplete="email" inputmode="email" />
           <span class="field-error" id="err-email">Please enter a valid email</span>
         </div>
+        <!-- Privacy / trust note -->
+        <div class="checkout-security-strip">
+          🔒 Used only to deliver your purchase — we never spam or share your info.
+        </div>
       </div>
-
+ 
       <div class="checkout-footer">
         <button class="btn-continue" onclick="showReview()">
           <span>Continue to Review</span>
@@ -679,14 +770,15 @@
           Back to product
         </button>
       </div>
-
+ 
     </div>
   </div>
-
+ 
   <!-- ── Review Page ───────────────────────────────────────────── -->
   <div id="page-review" class="page">
     <div class="review-card">
-
+ 
+      <!-- Header -->
       <div class="review-header">
         <div class="step-indicator">
           <div class="step-pip done"></div>
@@ -700,25 +792,46 @@
           <div id="review-price-badge" class="review-price-badge display">₹—</div>
         </div>
       </div>
-
+ 
+      <!-- ── Pay section — RIGHT BELOW HEADER, no scrolling needed ── -->
+      <div class="review-pay-section">
+        <div class="review-total-row">
+          <span class="review-total-label">Total Due</span>
+          <span id="review-total-display" class="review-total-amount">₹—</span>
+        </div>
+        <button class="btn-pay-now" id="btn-pay-now" onclick="initiatePayment()">
+          <svg viewBox="0 0 24 24" width="18" height="18"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          <span>Pay&nbsp;</span>
+          <span class="pay-amount" id="review-pay-amount">₹—</span>
+        </button>
+        <p class="review-security-note">🔒 Secured by Razorpay &middot; Instant digital delivery</p>
+      </div>
+ 
       <!-- Customer summary -->
-      <div class="customer-summary" style="margin-top:20px;">
+      <div class="customer-summary">
         <div class="customer-summary-info">
           <span class="customer-summary-name" id="review-customer-name">—</span>
           <span class="customer-summary-email" id="review-customer-email">—</span>
         </div>
         <button class="btn-edit" onclick="showCheckout()">Edit</button>
       </div>
-
+ 
       <!-- Affiliate badge -->
       <div class="review-affiliate" id="review-affiliate">
         <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
         Affiliate link applied — your referral is tracked
       </div>
-
-      <!-- Coupon -->
-      <div class="coupon-section">
-        <p class="coupon-label">Have a coupon code?</p>
+ 
+      <!-- Coupon toggle (collapsed by default) -->
+      <div class="coupon-toggle">
+        <button class="coupon-toggle-btn" id="coupon-toggle-btn" onclick="toggleCoupon()">
+          <span>🏷 Have a coupon code?</span>
+          <span class="coupon-toggle-chevron">▼</span>
+        </button>
+      </div>
+ 
+      <!-- Coupon section (expands when toggle clicked) -->
+      <div class="coupon-section" id="coupon-section">
         <div class="coupon-row">
           <input
             class="coupon-input" id="coupon-input"
@@ -734,7 +847,7 @@
         </div>
         <div class="coupon-feedback" id="coupon-feedback"></div>
       </div>
-
+ 
       <!-- Price breakdown -->
       <div class="price-breakdown">
         <div class="pb-row">
@@ -745,40 +858,46 @@
           <span class="pb-key" id="pb-discount-label">Coupon Discount</span>
           <span class="pb-val" id="pb-discount-val">—</span>
         </div>
-        <div class="pb-row total">
+        <div class="pb-row pb-total-row">
           <span class="pb-key">Total</span>
           <span class="pb-val" id="pb-total">₹—</span>
         </div>
       </div>
-
-      <!-- Pay button -->
+ 
+      <!-- Back button only in footer -->
       <div class="review-footer">
-        <button class="btn-pay-now" id="btn-pay-now" onclick="initiatePayment()">
-          <svg viewBox="0 0 24 24" width="18" height="18"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-          <span>Pay&nbsp;</span>
-          <span class="pay-amount" id="review-pay-amount">₹—</span>
-        </button>
         <button class="btn-back" onclick="showCheckout()">
           <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
           Back to details
         </button>
       </div>
-
+ 
     </div>
   </div>
-
+ 
 </div><!-- /#app -->
-
+ 
+<!-- ── Sticky Buy Bar — fixed at bottom on product page ───────── -->
+<div id="sticky-buy-bar">
+  <div class="sticky-buy-content">
+    <div class="sticky-buy-info">
+      <span class="sticky-buy-name" id="sticky-product-name">—</span>
+      <span class="sticky-buy-price">₹<span id="sticky-price">—</span></span>
+    </div>
+    <button class="sticky-buy-btn" onclick="showCheckout()">Buy Now — Instant Access</button>
+  </div>
+</div>
+ 
 <!-- Processing Overlay -->
 <div class="processing-overlay" id="processing-overlay">
   <div class="spinner" style="width:44px;height:44px;border-width:3px;"></div>
   <p class="processing-text display" id="processing-text">Processing…</p>
   <p class="processing-sub" id="processing-sub">Please wait, do not close this tab.</p>
 </div>
-
+ 
 <!-- Toast -->
 <div id="toast"></div>
-
+ 
 <script>
 /* ══════════════════════════════════════════════════════════════
    STATE
@@ -788,7 +907,7 @@ const STATE = {
   supabase:        null,
   product:         null,
   productId:       null,
-  affiliateId:     null,    // from URL ?ref=
+  affiliateId:     null,
   images:          [],
   carouselIndex:   0,
   isDragging:      false,
@@ -797,10 +916,11 @@ const STATE = {
   customerName:    '',
   customerEmail:   '',
   razorpayOrderId: null,
-  coupon:          null,    // { couponId, discountType, discount, affiliateId } | null
-  finalPrice:      null,    // computed after coupon
+  coupon:          null,
+  finalPrice:      null,
+  buyBarObserver:  null,
 };
-
+ 
 /* ══════════════════════════════════════════════════════════════
    INIT
 ══════════════════════════════════════════════════════════════ */
@@ -808,42 +928,41 @@ const STATE = {
   const productId = parseProductId();
   if (!productId) return showError('No Product URL', 'Please visit a valid product link, e.g. yourstore.com/product-id');
   STATE.productId = productId;
-
-  // Parse affiliate ref from URL
+ 
   const urlParams = new URLSearchParams(window.location.search);
   const refParam  = urlParams.get('ref');
   if (refParam) {
     const refId = parseInt(refParam, 10);
-    if (!isNaN(refId) && refId > 0) {
-      STATE.affiliateId = refId;
-    }
+    if (!isNaN(refId) && refId > 0) STATE.affiliateId = refId;
   }
-
+ 
   try {
     const cfgRes = await fetch('/api/config');
     if (!cfgRes.ok) throw new Error('Config fetch failed');
     STATE.config = await cfgRes.json();
-
+ 
     STATE.supabase = supabase.createClient(STATE.config.supabaseUrl, STATE.config.supabaseAnonKey);
-
+ 
     const { data, error } = await STATE.supabase
       .from('Products')
       .select('*')
       .eq('id', STATE.productId)
       .single();
-
+ 
     if (error || !data) return showError('Product Not Found', "This product doesn't exist or is no longer available.");
-
-    STATE.product = data;
+ 
+    STATE.product  = data;
     STATE.finalPrice = Number(data.Product_price) || 0;
     renderProduct(data);
     showPage('product');
+    // Set up sticky buy bar after product page is visible
+    requestAnimationFrame(() => setupStickyBuyBar());
   } catch (err) {
     console.error(err);
     showError('Something went wrong', err.message || 'Please refresh and try again.');
   }
 })();
-
+ 
 /* ══════════════════════════════════════════════════════════════
    URL PARSING
 ══════════════════════════════════════════════════════════════ */
@@ -852,7 +971,7 @@ function parseProductId() {
   if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(path)) return path;
   return null;
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    PAGE MANAGEMENT
 ══════════════════════════════════════════════════════════════ */
@@ -864,28 +983,65 @@ function showPage(name) {
   });
   document.getElementById('page-loading').style.display = 'none';
   document.getElementById('page-error').style.display   = 'none';
-
+ 
   const target = document.getElementById('page-' + name);
   const flexPages = ['checkout', 'review'];
   target.style.display = flexPages.includes(name) ? 'flex' : 'block';
   requestAnimationFrame(() => requestAnimationFrame(() => target.classList.add('active')));
   window.scrollTo({ top: 0, behavior: 'smooth' });
+ 
+  // Show sticky buy bar ONLY on product page
+  const stickyBar = document.getElementById('sticky-buy-bar');
+  if (stickyBar) {
+    if (name === 'product') {
+      stickyBar.style.display = 'flex';
+    } else {
+      stickyBar.style.display = 'none';
+      stickyBar.classList.remove('show');
+    }
+  }
 }
-
+ 
 function showError(title, msg) {
   document.getElementById('page-loading').style.display = 'none';
   document.getElementById('error-title').textContent = title;
   document.getElementById('error-msg').textContent   = msg;
   document.getElementById('page-error').style.display = 'flex';
 }
-
+ 
+/* ══════════════════════════════════════════════════════════════
+   STICKY BUY BAR
+══════════════════════════════════════════════════════════════ */
+function setupStickyBuyBar() {
+  const bar    = document.getElementById('sticky-buy-bar');
+  const buyBtn = document.getElementById('buy-btn');
+  if (!bar || !buyBtn) return;
+ 
+  // Disconnect any existing observer
+  if (STATE.buyBarObserver) STATE.buyBarObserver.disconnect();
+ 
+  bar.style.display = 'flex';
+ 
+  STATE.buyBarObserver = new IntersectionObserver(
+    ([entry]) => {
+      // Only act when product page is active
+      if (document.getElementById('page-product').classList.contains('active')) {
+        bar.classList.toggle('show', !entry.isIntersecting);
+      }
+    },
+    { threshold: 0.2, rootMargin: '0px 0px -60px 0px' }
+  );
+ 
+  STATE.buyBarObserver.observe(buyBtn);
+}
+ 
 /* ══════════════════════════════════════════════════════════════
    RENDER PRODUCT
 ══════════════════════════════════════════════════════════════ */
 function renderProduct(p) {
   document.title = (p.Product_name || 'Product') + ' — Creatorstack';
   document.getElementById('product-name').textContent = p.Product_name || 'Untitled Product';
-
+ 
   const descEl = document.getElementById('product-description');
   if (p.Product_description) {
     descEl.innerHTML = (p.Product_description || '')
@@ -894,14 +1050,14 @@ function renderProduct(p) {
   } else {
     descEl.textContent = '';
   }
-
+ 
   document.getElementById('product-price').textContent = formatPrice(p.Product_price);
-
+ 
   const originalPrice = p.strikethrough_price;
   const currentPrice  = p.Product_price;
   const priceOrigEl   = document.getElementById('price-original');
   const priceSaveEl   = document.getElementById('price-savings');
-
+ 
   if (originalPrice && originalPrice > currentPrice) {
     const savings = Math.round(((originalPrice - currentPrice) / originalPrice) * 100);
     priceOrigEl.textContent = '₹' + formatPrice(originalPrice);
@@ -912,23 +1068,27 @@ function renderProduct(p) {
     priceOrigEl.style.display = 'none';
     priceSaveEl.style.display = 'none';
   }
-
+ 
   STATE.images = (p.Product_image_url || '')
     .split(',').map(u => u.trim()).filter(Boolean);
   if (!STATE.images.length) STATE.images = [''];
   buildCarousel(STATE.images);
-
+ 
+  // Populate sticky buy bar
+  document.getElementById('sticky-product-name').textContent = p.Product_name || 'Product';
+  document.getElementById('sticky-price').textContent = formatPrice(p.Product_price);
+ 
   // Show affiliate indicator on product page
   if (STATE.affiliateId) {
     document.getElementById('affiliate-indicator').classList.add('show');
   }
 }
-
+ 
 function formatPrice(price) {
   if (!price && price !== 0) return '—';
   return Number(price).toLocaleString('en-IN');
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    PRICE COMPUTATION
 ══════════════════════════════════════════════════════════════ */
@@ -942,7 +1102,7 @@ function computeFinalPrice(basePrice, coupon) {
   }
   return basePrice;
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    CAROUSEL
 ══════════════════════════════════════════════════════════════ */
@@ -951,7 +1111,7 @@ function buildCarousel(images) {
   const dotsEl = document.getElementById('carousel-dots');
   track.innerHTML  = '';
   dotsEl.innerHTML = '';
-
+ 
   images.forEach((url, i) => {
     const slide = document.createElement('div');
     slide.className = 'carousel-slide';
@@ -971,7 +1131,7 @@ function buildCarousel(images) {
       slide.innerHTML = '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#C8C5BE" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
     }
     track.appendChild(slide);
-
+ 
     if (images.length > 1) {
       const dot = document.createElement('button');
       dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
@@ -980,7 +1140,7 @@ function buildCarousel(images) {
       dotsEl.appendChild(dot);
     }
   });
-
+ 
   const showNav = images.length > 1;
   document.getElementById('carousel-prev').style.display = showNav ? 'flex' : 'none';
   document.getElementById('carousel-next').style.display = showNav ? 'flex' : 'none';
@@ -989,7 +1149,7 @@ function buildCarousel(images) {
   setupCarouselDrag();
   goToSlide(0, false);
 }
-
+ 
 function goToSlide(index, animate = true) {
   const count = STATE.images.length;
   STATE.carouselIndex = ((index % count) + count) % count;
@@ -999,7 +1159,7 @@ function goToSlide(index, animate = true) {
   if (!animate) requestAnimationFrame(() => { track.style.transition = ''; });
   document.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === STATE.carouselIndex));
 }
-
+ 
 function setupCarouselDrag() {
   const carousel = document.getElementById('carousel');
   carousel.addEventListener('mousedown', e => { STATE.isDragging = true; STATE.dragStartX = e.clientX; });
@@ -1016,12 +1176,12 @@ function setupCarouselDrag() {
     if (Math.abs(diff) > 40) goToSlide(STATE.carouselIndex + (diff > 0 ? 1 : -1));
   }, { passive: true });
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    CHECKOUT FLOW
 ══════════════════════════════════════════════════════════════ */
 function showProduct() { showPage('product'); }
-
+ 
 function showCheckout() {
   const p = STATE.product;
   document.getElementById('checkout-product-name').textContent = p.Product_name || 'Product';
@@ -1031,81 +1191,107 @@ function showCheckout() {
   showPage('checkout');
   setTimeout(() => document.getElementById('input-name').focus(), 400);
 }
-
+ 
 function showReview() {
   if (!validateCheckoutForm()) return;
-
+ 
   const p = STATE.product;
-  const base = Number(p.Product_price) || 0;
-
-  document.getElementById('review-product-name').textContent = p.Product_name || 'Product';
+ 
+  document.getElementById('review-product-name').textContent  = p.Product_name || 'Product';
   document.getElementById('review-customer-name').textContent  = STATE.customerName;
   document.getElementById('review-customer-email').textContent = STATE.customerEmail;
-
+ 
   // Affiliate badge
   const affEl = document.getElementById('review-affiliate');
   if (STATE.affiliateId) affEl.classList.add('show');
   else affEl.classList.remove('show');
-
-  // Restore coupon state if returning from back
+ 
+  // Restore price state and update all elements
   updatePriceBreakdown();
   showPage('review');
 }
-
+ 
+/* ── Coupon Toggle ─────────────────────────────────────────── */
+function toggleCoupon() {
+  const section = document.getElementById('coupon-section');
+  const btn     = document.getElementById('coupon-toggle-btn');
+  const isOpen  = section.classList.toggle('open');
+  btn.classList.toggle('active', isOpen);
+  if (isOpen) {
+    setTimeout(() => {
+      const input = document.getElementById('coupon-input');
+      if (input && !input.readOnly) input.focus();
+    }, 200);
+  }
+}
+ 
 /* ── Form Validation ───────────────────────────────────────── */
 function validateCheckoutForm() {
   let valid = true;
   const name  = document.getElementById('input-name').value.trim();
   const email = document.getElementById('input-email').value.trim();
-
-  document.getElementById('input-name').classList.remove('error');
+ 
+  document.getElementById('input-name').classList.remove('error', 'valid');
   document.getElementById('err-name').classList.remove('show');
-  document.getElementById('input-email').classList.remove('error');
+  document.getElementById('input-email').classList.remove('error', 'valid');
   document.getElementById('err-email').classList.remove('show');
-
+ 
   if (!name || name.length < 2) {
     document.getElementById('input-name').classList.add('error');
     document.getElementById('err-name').classList.add('show');
     valid = false;
+  } else {
+    document.getElementById('input-name').classList.add('valid');
   }
-
+ 
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || !emailRe.test(email)) {
     document.getElementById('input-email').classList.add('error');
     document.getElementById('err-email').classList.add('show');
     valid = false;
+  } else {
+    document.getElementById('input-email').classList.add('valid');
   }
-
+ 
   if (valid) {
     STATE.customerName  = name;
     STATE.customerEmail = email;
   }
   return valid;
 }
-
+ 
+// Live validation feedback on input
 ['input-name','input-email'].forEach(id => {
   document.getElementById(id).addEventListener('input', function() {
-    this.classList.remove('error');
+    this.classList.remove('error', 'valid');
     const suffix = id === 'input-name' ? 'name' : 'email';
     document.getElementById('err-' + suffix).classList.remove('show');
+ 
+    // Show green valid state when field looks correct
+    const val = this.value.trim();
+    if (id === 'input-name' && val.length >= 2) {
+      this.classList.add('valid');
+    } else if (id === 'input-email' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+      this.classList.add('valid');
+    }
   });
 });
-
+ 
 /* ── Coupon ────────────────────────────────────────────────── */
 async function applyCoupon() {
-  const input   = document.getElementById('coupon-input');
-  const feedback= document.getElementById('coupon-feedback');
-  const btnApply= document.getElementById('btn-apply');
-  const code    = input.value.trim().toUpperCase();
-
+  const input    = document.getElementById('coupon-input');
+  const feedback = document.getElementById('coupon-feedback');
+  const btnApply = document.getElementById('btn-apply');
+  const code     = input.value.trim().toUpperCase();
+ 
   if (!code) { setCouponFeedback('Please enter a coupon code', 'error'); return; }
-
+ 
   btnApply.disabled = true;
   btnApply.textContent = '…';
   feedback.textContent = '';
   feedback.className   = 'coupon-feedback';
   input.classList.remove('applied', 'invalid');
-
+ 
   try {
     const res  = await fetch('/api/validate-coupon', {
       method:  'POST',
@@ -1113,7 +1299,7 @@ async function applyCoupon() {
       body:    JSON.stringify({ couponCode: code }),
     });
     const data = await res.json();
-
+ 
     if (!res.ok) {
       input.classList.add('invalid');
       setCouponFeedback(data.error || 'Invalid coupon', 'error');
@@ -1125,19 +1311,21 @@ async function applyCoupon() {
         discount:     data.discount,
         affiliateId:  data.affiliateId,
       };
-      // If coupon has affiliate, it takes precedence
       if (data.affiliateId) STATE.affiliateId = data.affiliateId;
-
+ 
       input.classList.add('applied');
       input.readOnly = true;
-
-      const base = Number(STATE.product.Product_price) || 0;
+ 
       const discountDisplay = data.discountType === 'percentage'
         ? `${data.discount}% off`
         : `₹${formatPrice(data.discount)} off`;
       setCouponFeedback(`✓ Coupon applied — ${discountDisplay}`, 'success');
       document.getElementById('btn-remove').classList.add('show');
       btnApply.style.display = 'none';
+ 
+      // Keep section open after applying
+      document.getElementById('coupon-section').classList.add('open');
+      document.getElementById('coupon-toggle-btn').classList.add('active');
     }
   } catch (err) {
     setCouponFeedback('Could not validate coupon. Try again.', 'error');
@@ -1150,14 +1338,14 @@ async function applyCoupon() {
     updatePriceBreakdown();
   }
 }
-
+ 
 function removeCoupon() {
   STATE.coupon = null;
-
+ 
   const input    = document.getElementById('coupon-input');
   const btnApply = document.getElementById('btn-apply');
   const btnRemov = document.getElementById('btn-remove');
-
+ 
   input.value       = '';
   input.readOnly    = false;
   input.classList.remove('applied', 'invalid');
@@ -1166,25 +1354,30 @@ function removeCoupon() {
   btnRemov.classList.remove('show');
   document.getElementById('coupon-feedback').textContent = '';
   document.getElementById('coupon-feedback').className   = 'coupon-feedback';
-
+ 
   updatePriceBreakdown();
 }
-
+ 
 function setCouponFeedback(msg, type) {
   const el = document.getElementById('coupon-feedback');
   el.textContent = msg;
   el.className   = 'coupon-feedback ' + type;
 }
-
+ 
 function updatePriceBreakdown() {
-  const base      = Number(STATE.product.Product_price) || 0;
-  const final     = computeFinalPrice(base, STATE.coupon);
+  const base  = Number(STATE.product.Product_price) || 0;
+  const final = computeFinalPrice(base, STATE.coupon);
   STATE.finalPrice = final;
-
+ 
   document.getElementById('pb-original').textContent   = '₹' + formatPrice(base);
   document.getElementById('review-price-badge').textContent = '₹' + formatPrice(base);
   document.getElementById('review-pay-amount').textContent  = '₹' + formatPrice(final);
-
+  document.getElementById('pb-total').textContent           = '₹' + formatPrice(final);
+ 
+  // Update the top "Total Due" display in the pay section
+  const rtd = document.getElementById('review-total-display');
+  if (rtd) rtd.textContent = '₹' + formatPrice(final);
+ 
   const discountRow = document.getElementById('pb-discount-row');
   if (STATE.coupon && final < base) {
     const saved = base - final;
@@ -1197,24 +1390,22 @@ function updatePriceBreakdown() {
   } else {
     discountRow.style.display = 'none';
   }
-
-  document.getElementById('pb-total').textContent = '₹' + formatPrice(final);
 }
-
-// Allow Enter key on coupon input
+ 
+// Allow Enter on coupon input
 document.getElementById('coupon-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') applyCoupon();
 });
-
+ 
 /* ── Razorpay ──────────────────────────────────────────────── */
 async function initiatePayment() {
   const payBtn = document.getElementById('btn-pay-now');
   payBtn.disabled = true;
-
+ 
   const finalPrice = STATE.finalPrice ?? Number(STATE.product.Product_price);
-
+ 
   showProcessing('Creating secure payment…', 'Please wait a moment.');
-
+ 
   try {
     const res = await fetch('/api/create-order', {
       method:  'POST',
@@ -1224,13 +1415,13 @@ async function initiatePayment() {
         productId: STATE.productId,
       }),
     });
-
+ 
     const orderData = await res.json();
     if (!res.ok) throw new Error(orderData.error || 'Could not create payment order.');
-
+ 
     STATE.razorpayOrderId = orderData.orderId;
     hideProcessing();
-
+ 
     const rzpOptions = {
       key:         STATE.config.razorpayKeyId,
       amount:      orderData.amount,
@@ -1254,7 +1445,7 @@ async function initiatePayment() {
         await verifyAndRecord(response);
       },
     };
-
+ 
     const rzp = new Razorpay(rzpOptions);
     rzp.on('payment.failed', function(resp) {
       hideProcessing();
@@ -1262,14 +1453,14 @@ async function initiatePayment() {
       showToast('Payment failed: ' + (resp.error.description || 'Unknown error'), true);
     });
     rzp.open();
-
+ 
   } catch (err) {
     hideProcessing();
     payBtn.disabled = false;
     showToast(err.message || 'Something went wrong, please try again.', true);
   }
 }
-
+ 
 async function verifyAndRecord(razorpayResponse) {
   try {
     const res = await fetch('/api/verify-payment', {
@@ -1286,13 +1477,13 @@ async function verifyAndRecord(razorpayResponse) {
         couponId:            STATE.coupon?.couponId || null,
       }),
     });
-
+ 
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Verification failed');
-
+ 
     hideProcessing();
     window.location.href = '/thankyou/' + data.orderId;
-
+ 
   } catch (err) {
     hideProcessing();
     console.error('verify error:', err);
@@ -1306,7 +1497,7 @@ async function verifyAndRecord(razorpayResponse) {
     }, 2000);
   }
 }
-
+ 
 /* ══════════════════════════════════════════════════════════════
    UI HELPERS
 ══════════════════════════════════════════════════════════════ */
@@ -1318,7 +1509,7 @@ function showProcessing(text, sub) {
 function hideProcessing() {
   document.getElementById('processing-overlay').classList.remove('show');
 }
-
+ 
 let toastTimer;
 function showToast(msg, isError = false) {
   const el = document.getElementById('toast');
@@ -1328,7 +1519,7 @@ function showToast(msg, isError = false) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => el.classList.remove('show'), 4000);
 }
-
+ 
 function openModal(id)  { document.getElementById('modal-' + id).classList.add('open'); document.body.style.overflow = 'hidden'; }
 function closeModal(id) { document.getElementById('modal-' + id).classList.remove('open'); document.body.style.overflow = ''; }
 document.querySelectorAll('.modal-overlay').forEach(o => {
@@ -1338,7 +1529,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { document.querySelectorAll('.modal-overlay.open').forEach(m => { m.classList.remove('open'); document.body.style.overflow = ''; }); }
 });
 </script>
-
+ 
 <!-- ── Footer ────────────────────────────────────────────────── -->
 <footer>
   <div class="container">
@@ -1389,7 +1580,7 @@ document.addEventListener('keydown', e => {
     </div>
   </div>
 </footer>
-
+ 
 <!-- Modals: Terms -->
 <div class="modal-overlay" id="modal-terms">
   <div class="modal-box">
@@ -1406,7 +1597,7 @@ document.addEventListener('keydown', e => {
     </div>
   </div>
 </div>
-
+ 
 <!-- Modals: Privacy -->
 <div class="modal-overlay" id="modal-privacy">
   <div class="modal-box">
@@ -1421,7 +1612,7 @@ document.addEventListener('keydown', e => {
     </div>
   </div>
 </div>
-
+ 
 <!-- Modals: Refund -->
 <div class="modal-overlay" id="modal-refund">
   <div class="modal-box">
@@ -1434,7 +1625,7 @@ document.addEventListener('keydown', e => {
     </div>
   </div>
 </div>
-
+ 
 <!-- Modals: Disclaimer -->
 <div class="modal-overlay" id="modal-disclaimer">
   <div class="modal-box">
@@ -1448,6 +1639,6 @@ document.addEventListener('keydown', e => {
     </div>
   </div>
 </div>
-
+ 
 </body>
 </html>
